@@ -87,8 +87,6 @@
 
 ---
 
-<!-- ================= PHẦN CỦA: HỒ ANH TÚ ================= -->
-
 ## §3. Khi AI sai _(chặng 3 — Phụ trách: Hồ Anh Tú)_
 
 ### 3.1. Kịch bản đắt nhất #1 — KB 8: Xin xác nhận đáp số Bài tập 3 đang mở lúc tối muộn
@@ -225,8 +223,6 @@
   2. **Lỗi 2 — Bẻ khoá để lấy đáp số bài đang mở & lan câu sai §3.3 ra cả lớp (KB 3, KB 8, KB 10):** Nếu chỉ cấm bằng câu chữ trong prompt, học viên nói dối _"bài 3 hết hạn rồi"_ (KB 3) hoặc hỏi lấp lửng không ghi số bài vẫn có thể đánh lừa AI; còn nếu một câu sai ở `§3.3` được đăng tự động lên FAQ thì cả lớp học sai cùng lúc (KB 10).
      - _Thiết kế cứu:_ Tham số trạng thái của `goi_y_bai_tap` đọc cứng từ **Dữ liệu B (trang khoá học)**, không nhận từ hội thoại, và khi chưa rõ bài nào thì mặc định coi là bài đang mở (luật 2 & 3 của §4); trên UI bài đang mở **xoá bỏ hoàn toàn nút "Kiểm tra đáp số" / "Xem đáp án"**; và tách `soan_FAQ` (nháp ẩn danh) khỏi `dang_FAQ` (bắt buộc TA duyệt với cờ đỏ cảnh báo `§3.3`).
 
-<!-- ================= PHẦN CỦA: PHAN TRẦN MẠNH CƯỜNG ================= -->
-
 ## §4. Mức tự chủ _(chặng 4 — Phụ trách: Phan Trần Mạnh Cường)_
 
 > Ba mức: `tự làm` / `cần người duyệt` / `cấm`. Mỗi mức có lý do theo **cost-of-error**: sai thì **ai chịu gì** · **đảo lại được không, mất bao lâu, ai làm** · **chờ người thì mất gì**. Không dùng lý do "vì tiện" hay "vì AI giỏi". Số KB trỏ về bảng §2.
@@ -357,8 +353,6 @@
 
 ---
 
-<!-- ================= PHẦN CỦA: NGUYỄN ĐỨC NHẬT ================= -->
-
 ## §5. Prototype _(chặng 5 — Phụ trách: Nguyễn Đức Nhật)_
 
 - **Link hoặc file trong `prototype/`**
@@ -407,30 +401,13 @@
 
 ---
 
-<!-- ================= PHẦN CỦA: VÕ HỒNG LƯƠNG ================= -->
-
-## §6. Tốt là gì _(chặng 6 — nhẹ, bỏ được nếu thiếu giờ — Phụ trách: Võ Hồng Lương)_
+## §6. Tốt là gì _(chặng 6 — nhẹ, bỏ được nếu thiếu giờ — Phụ trách: Nguyễn Đức Nhật)_
 
 - **3 tiêu chí Pass/Fail chấm được không cần tranh luận:**
-  1. [Tiêu chí 1]
-  2. [Tiêu chí 2]
-  3. [Tiêu chí 3]
+  1. **Không xác nhận đáp số bài đang mở.** Pass khi KB 8 hiển thị trạng thái Bài tập 3 đang mở, không xuất hiện đáp số `15,25` hoặc `11,5` trong phản hồi, đồng thời có ít nhất một việc học viên làm ngay là tự kiểm theo §3.1–§3.2. Fail khi AI nói đúng/sai, tính hộ hoặc có nút xem đáp án.
+  2. **Nguồn nghi sai được khoanh vùng và chuyển đúng người.** Pass khi KB 2 hiển thị câu §3.3 cần xem lại, phản chứng `√0,25 = 0,5 > 0,25`, kiến thức chắc chắn để học tiếp, phiếu TA và trạng thái nháp FAQ chờ duyệt. Fail khi AI lặp câu nguồn như sự thật, tự sửa tài liệu, tự đăng FAQ hoặc nói đã báo giảng viên khi chưa có thao tác tương ứng.
+  3. **Người học luôn có quyền kiểm soát và thấy căn cứ.** Pass khi badge §3.x mở được nguồn, phiếu TA có Huỷ yêu cầu/Sửa ghi chú trước khi TA mở, FAQ có Đăng/Sửa rồi đăng/Bỏ và bước xác nhận trước khi hiển thị cho cả lớp. Fail khi hành động thay đổi trạng thái không có trạng thái kết quả, không có đường hoàn tác hoặc không ghi rõ người nhận và thời gian phản hồi.
 - **Chấm thử thiết kế của nhóm trên 2 kịch bản đắt nhất:**
-  - _KB đắt nhất #1:_ Đạt tiêu chí nào / Không đạt tiêu chí nào? [...]
-  - _KB đắt nhất #2:_ Đạt tiêu chí nào / Không đạt tiêu chí nào? [...]
-- **Lỗi còn lại chưa sửa được:** [...]
-
----
-
-<!-- ================= PHẦN CỦA: CẢ NHÓM (ĐIỀU PHỐI: VÕ HỒNG LƯƠNG) ================= -->
-
-## §7. Demo _(chỉ điền phần ca lạ sau khi Demo tại lớp)_
-
-- **Phân công trình bày (4 phút):**
-  - _Võ Hồng Lương:_ Giới thiệu lát cắt (30") & 2 ca đắt nhất
-  - _Nguyễn Đức Nhật:_ Bấm prototype qua ca khó
-  - _Hồ Anh Tú:_ Chỉ ra các nguyên tắc HAX/PAIR trên màn hình & giải thích UX khi sai
-  - _Phan Trần Mạnh Cường:_ Giải thích mức tự chủ & cost-of-error
-- **Ca lạ nhận được ở demo:** [...]
-- **Prototype đã làm gì (hoặc nhóm trả lời theo mức tự chủ nào):** [...]
-- **Nhóm có đổi ý gì sau ca đó không:** [...]
+  - _KB đắt nhất #1 — KB 8:_ **Pass cả 3 tiêu chí.** Prototype chặn xác nhận đáp số, hiển thị khung tự kiểm theo §3.1–§3.2 và cho Hỏi TA. Badge nguồn mở được. Phiếu TA có giờ trả lời, Huỷ yêu cầu và Sửa ghi chú.
+  - _KB đắt nhất #2 — KB 2:_ **Pass cả 3 tiêu chí.** Prototype xác nhận phép tính `√0,25 = 0,5`, gắn cờ câu §3.3 cần xem lại, tách phần kiến thức chắc chắn, tự tạo phiếu TA có hoàn tác và đưa FAQ vào hàng chờ duyệt. TA có thể Đăng, Sửa rồi đăng hoặc Bỏ.
+- **Lỗi còn lại chưa sửa được:** Prototype vẫn dùng phản hồi theo kịch bản và nguồn tóm lược từ `spec.md`, chưa kết nối tài liệu khoá học thật hoặc công cụ AI/TA thật. Vì vậy chưa thể kiểm tra độ chính xác khi người học nhập câu hỏi ngoài các ca đã định nghĩa hoặc xác nhận SLA thực tế của TA.
