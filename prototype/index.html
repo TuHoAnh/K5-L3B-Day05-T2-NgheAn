@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trợ lý học bài · LAB5 T2</title>
+    <style>
+      :root {
+        --ink: #24323b;
+        --muted: #647078;
+        --paper: #f6f5f1;
+        --white: #fff;
+        --line: #e2e5e2;
+        --brand: #8a364b;
+        --pale: #f7edf0;
+        --green: #2c6757;
+        --green-bg: #eaf4ee;
+        --amber: #815918;
+        --amber-bg: #fff5dc;
+        --red: #a13636;
+        --nav: #233a3d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          15px/1.6 "Segoe UI",
+          Arial,
+          sans-serif;
+      }
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+        opacity: 0.55;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #b84e69;
+        outline-offset: 3px;
+      }
+      button {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: white;
+        color: var(--ink);
+        padding: 9px 14px;
+        font-weight: 600;
+      }
+      button:hover:enabled {
+        border-color: var(--brand);
+        background: var(--pale);
+      }
+      .primary {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: white;
+      }
+      .primary:hover:enabled {
+        background: #702b3d;
+        color: white;
+      }
+      .quiet {
+        background: transparent;
+      }
+      .danger {
+        color: var(--red);
+      }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: 29px;
+        font-weight: 650;
+        letter-spacing: -0.8px;
+      }
+      h2 {
+        font-size: 20px;
+        letter-spacing: -0.35px;
+      }
+      h3 {
+        font-size: 15px;
+      }
+      p + p {
+        margin-top: 10px;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .topbar {
+        height: 72px;
+        background: white;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 34px;
+        gap: 18px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .logo-mark {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--nav);
+        color: white;
+        font-family: Georgia, serif;
+        font-size: 24px;
+      }
+      .divider {
+        height: 24px;
+        width: 1px;
+        background: var(--line);
+        margin: 0 6px;
+      }
+      .tabs {
+        display: flex;
+        gap: 5px;
+        background: var(--paper);
+        padding: 4px;
+        border-radius: 10px;
+      }
+      .tabs button {
+        background: transparent;
+        border-color: transparent;
+        padding: 6px 15px;
+        font-size: 13px;
+      }
+      .tabs button[aria-selected="true"] {
+        background: white;
+        box-shadow: 0 2px 5px #233a3d12;
+        color: var(--brand);
+      }
+      .demo-tag {
+        background: var(--amber-bg);
+        color: var(--amber);
+        font-size: 11px;
+        padding: 5px 9px;
+        border-radius: 5px;
+        font-weight: 700;
+      }
+      .layout {
+        max-width: 1460px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        min-height: calc(100vh - 72px);
+      }
+      .sidebar {
+        padding: 30px 22px;
+        border-right: 1px solid var(--line);
+      }
+      .course-name {
+        font-size: 18px;
+        font-weight: 650;
+        margin: 8px 0 24px;
+      }
+      .lesson {
+        display: block;
+        width: 100%;
+        border: 0;
+        text-align: left;
+        padding: 12px 14px;
+        margin: 5px 0;
+        background: transparent;
+        font-size: 13px;
+        font-weight: 400;
+      }
+      .lesson.active {
+        background: #e6edeb;
+        color: var(--green);
+        font-weight: 650;
+      }
+      .lesson span {
+        display: block;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .sidebar-note {
+        border-top: 1px solid var(--line);
+        margin-top: 28px;
+        padding-top: 20px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .sidebar-note strong {
+        color: var(--ink);
+        display: block;
+        margin-bottom: 6px;
+      }
+      .hours {
+        margin-top: 20px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: white;
+      }
+      .hours p {
+        font-size: 12px;
+        margin-top: 5px;
+      }
+      .dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #be8532;
+        margin-right: 6px;
+      }
+      main {
+        padding: 28px 32px 36px;
+        min-width: 0;
+      }
+      .page-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 22px;
+        gap: 12px;
+      }
+      .page-head p {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .clock {
+        text-align: right;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .clock strong {
+        display: block;
+        font-size: 17px;
+        color: var(--ink);
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 292px;
+        gap: 20px;
+        align-items: start;
+      }
+      .panel {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        overflow: hidden;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+        gap: 10px;
+      }
+      .assistant-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 650;
+      }
+      .spark {
+        background: var(--pale);
+        color: var(--brand);
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 9px;
+        font-size: 21px;
+      }
+      .status {
+        font-size: 11px;
+        color: var(--green);
+        background: var(--green-bg);
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      .conversation {
+        padding: 22px;
+      }
+      .intro {
+        padding: 36px 12px;
+        text-align: center;
+      }
+      .intro .spark {
+        margin: 0 auto 14px;
+        width: 48px;
+        height: 48px;
+      }
+      .intro p {
+        color: var(--muted);
+        font-size: 13px;
+        max-width: 350px;
+        margin: 9px auto 0;
+      }
+      .user-message {
+        background: #eef0ef;
+        padding: 13px 16px;
+        border-radius: 11px 11px 2px 11px;
+        margin-left: 34px;
+        font-size: 14px;
+      }
+      .message-meta {
+        font-size: 11px;
+        color: var(--muted);
+        margin: 7px 0 17px;
+        text-align: right;
+      }
+      .answer-title {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .answer p {
+        font-size: 14px;
+      }
+      .confidence {
+        padding: 12px 14px;
+        background: var(--green-bg);
+        border: 1px solid #d2e5d8;
+        border-radius: 8px;
+        font-size: 12px;
+        color: var(--green);
+        margin: 14px 0;
+      }
+      .confidence.warn {
+        background: var(--amber-bg);
+        border-color: #ecd9a5;
+        color: var(--amber);
+      }
+      .confidence strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+      .marker {
+        display: inline-grid;
+        place-items: center;
+        border-radius: 50%;
+        width: 23px;
+        height: 23px;
+        min-width: 23px;
+        background: var(--brand);
+        color: white;
+        font-size: 12px;
+        font-weight: 750;
+        vertical-align: middle;
+      }
+      .marked-title {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+      }
+      .source-links {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin: 14px 0;
+      }
+      .source-links button {
+        font-size: 11px;
+        padding: 5px 9px;
+        background: #f5f7f6;
+        color: var(--green);
+      }
+      .answer-block {
+        padding: 12px 14px;
+        border-left: 3px solid #b4c9bf;
+        margin: 12px 0;
+        background: #f6f9f7;
+        font-size: 13px;
+      }
+      .answer-block.suspect {
+        border-color: #cf9d43;
+        background: #fff9eb;
+      }
+      .answer-block strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .formula {
+        font-size: 20px;
+        font-family: Georgia, serif;
+        padding: 8px 0;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+      }
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      .transfer {
+        border: 1px solid #cadfd3;
+        border-radius: 9px;
+        margin-top: 16px;
+        padding: 14px;
+        background: #f5faf7;
+      }
+      .transfer.cancelled {
+        border-color: var(--line);
+        background: #f6f6f5;
+      }
+      .transfer .actions button {
+        font-size: 12px;
+        padding: 6px 9px;
+      }
+      .transfer p {
+        font-size: 12px;
+        margin-top: 7px;
+      }
+      .composer {
+        border-top: 1px solid var(--line);
+        padding: 16px 20px;
+      }
+      .input-row {
+        display: flex;
+        gap: 9px;
+        align-items: flex-end;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 66px;
+        border: 1px solid #d7ddda;
+        border-radius: 9px;
+        padding: 10px 12px;
+        width: 100%;
+        background: #fcfcfa;
+        color: var(--ink);
+      }
+      .input-row button {
+        height: 43px;
+      }
+      .composer .small {
+        margin-top: 8px;
+        font-size: 11px;
+      }
+      .side-stack {
+        display: grid;
+        gap: 16px;
+      }
+      .side-card {
+        padding: 18px;
+      }
+      .side-card h3 {
+        margin-bottom: 12px;
+      }
+      .label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--muted);
+        font-weight: 700;
+        margin-bottom: 7px;
+      }
+      .assignment {
+        padding: 11px 12px;
+        border-radius: 8px;
+        background: var(--pale);
+        font-size: 12px;
+        margin-bottom: 13px;
+      }
+      .assignment strong {
+        display: block;
+        color: var(--brand);
+      }
+      .control-row {
+        display: flex;
+        gap: 9px;
+        font-size: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #edf0ed;
+      }
+      .control-row:last-child {
+        border: 0;
+        padding-bottom: 0;
+      }
+      .control-icon {
+        width: 23px;
+        height: 23px;
+        display: grid;
+        place-items: center;
+        border-radius: 5px;
+        background: var(--green-bg);
+        color: var(--green);
+        flex-shrink: 0;
+      }
+      .control-row strong {
+        display: block;
+      }
+      .control-row span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .scenario-select {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: white;
+        padding: 9px;
+        margin: 4px 0 10px;
+        font-size: 12px;
+      }
+      .side-card .primary {
+        width: 100%;
+        font-size: 12px;
+      }
+      .footnote {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 14px;
+      }
+      .proof-key {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 20px;
+      }
+      .proof-key span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .proof-key .marker {
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        font-size: 10px;
+      }
+      .ta-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.3fr);
+        gap: 20px;
+      }
+      .ta-card {
+        padding: 22px;
+      }
+      .ta-card h2 {
+        margin: 12px 0;
+      }
+      .ta-card p {
+        font-size: 13px;
+      }
+      .ta-card textarea {
+        min-height: 155px;
+        margin-top: 10px;
+      }
+      .ticket {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        margin-top: 13px;
+      }
+      .ticket.read {
+        background: #f4f7f5;
+      }
+      .ticket h3 {
+        margin-bottom: 5px;
+      }
+      .ticket p {
+        font-size: 12px;
+      }
+      .badge-red {
+        background: #faece9;
+        color: var(--red);
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 5px;
+      }
+      .empty {
+        padding: 32px 16px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+      }
+      .published {
+        border: 1px solid #bfd8ca;
+        background: var(--green-bg);
+        padding: 16px;
+        border-radius: 9px;
+        margin-top: 18px;
+      }
+      .published h3 {
+        color: var(--green);
+        margin-bottom: 8px;
+      }
+      dialog {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 26px;
+        max-width: 560px;
+        width: calc(100% - 32px);
+        box-shadow: 0 24px 80px #1b302a30;
+        color: var(--ink);
+      }
+      dialog::backdrop {
+        background: #1d302b65;
+      }
+      dialog h2 {
+        margin-bottom: 15px;
+      }
+      dialog p {
+        font-size: 14px;
+      }
+      dialog .actions {
+        justify-content: flex-end;
+      }
+      blockquote {
+        margin: 15px 0;
+        padding: 15px;
+        background: var(--paper);
+        border-left: 3px solid var(--brand);
+        font-size: 14px;
+      }
+      mark {
+        background: #ffe5a2;
+        color: inherit;
+      }
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--nav);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 9px;
+        font-size: 13px;
+        box-shadow: 0 4px 18px #0002;
+        z-index: 5;
+      }
+      .hidden,
+      [hidden] {
+        display: none !important;
+      }
+      @media (min-width: 1500px) {
+        main {
+          padding-top: 38px;
+        }
+        .conversation {
+          padding: 26px;
+        }
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 310px;
+        }
+      }
+      @media (max-width: 1150px) {
+        .layout {
+          grid-template-columns: 190px 1fr;
+        }
+        .sidebar {
+          padding: 25px 15px;
+        }
+        main {
+          padding: 24px 20px;
+        }
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 255px;
+        }
+        .topbar {
+          padding: 0 22px;
+        }
+        .logo .course-top {
+          display: none;
+        }
+      }
+      @media (max-width: 920px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          display: none;
+        }
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 270px;
+        }
+        .ta-grid {
+          grid-template-columns: 1fr;
+        }
+        .topbar {
+          padding: 0 18px;
+        }
+        .logo .divider {
+          display: none;
+        }
+      }
+      @media (max-width: 680px) {
+        .topbar {
+          height: auto;
+          min-height: 72px;
+          flex-wrap: wrap;
+          padding: 12px 16px;
+          gap: 10px;
+        }
+        .topbar .demo-tag {
+          display: none;
+        }
+        .logo {
+          font-size: 14px;
+        }
+        .tabs button {
+          padding: 6px 10px;
+        }
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+        main {
+          padding: 20px 14px;
+        }
+        .page-head {
+          margin-bottom: 16px;
+        }
+        h1 {
+          font-size: 24px;
+        }
+        .clock {
+          font-size: 10px;
+        }
+        .clock strong {
+          font-size: 13px;
+        }
+        .side-stack {
+          grid-template-columns: 1fr;
+        }
+        .conversation {
+          padding: 17px;
+        }
+        .user-message {
+          margin-left: 15px;
+        }
+        .composer {
+          padding: 14px;
+        }
+        .proof-key {
+          gap: 10px;
+        }
+        .input-row {
+          align-items: stretch;
+        }
+        .input-row button {
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true">a</span> AI20K <span class="divider"></span
+        ><span class="course-top">Không gian học tập</span>
+      </div>
+      <nav class="tabs" aria-label="Vai trò mô phỏng">
+        <button id="learner-tab" aria-selected="true" data-action="learner">Học viên</button
+        ><button id="ta-tab" aria-selected="false" data-action="ta">
+          Hàng chờ TA <span id="queue-count"></span>
+        </button>
+      </nav>
+      <span class="demo-tag">PROTOTYPE · DỮ LIỆU MÔ PHỎNG</span>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="eyebrow">Khoá học</div>
+        <div class="course-name">Nhập môn<br />phân tích dữ liệu</div>
+        <div class="label">Nội dung đã mở</div>
+        <div class="lesson">Buổi 1<span>Đã mở · chưa có nội dung demo</span></div>
+        <div class="lesson">Buổi 2<span>Đã mở · chưa có nội dung demo</span></div>
+        <div class="lesson active">Buổi 3 · Thống kê mô tả<span>§3.1 – §3.5</span></div>
+        <div class="lesson">
+          Buổi 7 · Kiểm định giả thuyết<span>Chưa mở · chỉ có đề cương</span>
+        </div>
+        <div class="hours">
+          <strong id="ta-availability" class="small"
+            ><span class="dot"></span>TA đã hết giờ trực</strong
+          >
+          <p id="ta-hours">Giờ trực 08:00–22:00<br />Tiếp nhận từ 08:00 ngày 14/11</p>
+        </div>
+        <div class="sidebar-note">
+          <strong>Học tiếp, từng bước.</strong>Trợ lý trích mục tài liệu, gợi ý cách làm và chuyển
+          câu hỏi tới TA.
+        </div>
+      </aside>
+      <main>
+        <section id="learner-screen" aria-label="Màn hình học viên">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Buổi 3 / Thống kê mô tả</div>
+              <h1>Gỡ vướng cùng trợ lý</h1>
+              <p>Đối chiếu nguồn và chọn bước tiếp theo của bạn.</p>
+            </div>
+            <div class="clock">
+              Bối cảnh demo cố định<strong id="scenario-clock">22:40 · 13/11/2026</strong>
+            </div>
+          </div>
+          <div class="workspace">
+            <section class="panel" aria-label="Cuộc hội thoại">
+              <div class="panel-head">
+                <div class="assistant-label">
+                  <span class="spark" aria-hidden="true">✧</span>Trợ lý AI
+                  <span class="marker" title="G1, G2 — Phạm vi và độ chắc">1</span>
+                </div>
+                <span class="status">Buổi 1–3 đã mở</span>
+              </div>
+              <div id="conversation" class="conversation" aria-live="polite"></div>
+              <form id="message-form" class="composer">
+                <label class="small" for="message">Câu hỏi của bạn</label>
+                <div class="input-row">
+                  <textarea
+                    id="message"
+                    placeholder="Nhập câu hỏi hoặc chọn ca demo bên phải…"
+                    maxlength="1500"
+                    required
+                  ></textarea
+                  ><button class="primary" type="submit">Gửi ↗</button>
+                </div>
+                <div class="small">
+                  Phản hồi theo kịch bản cố định. Mọi phiếu TA và FAQ chỉ tồn tại trong phiên demo.
+                </div>
+              </form>
+            </section>
+            <aside class="side-stack">
+              <section class="panel side-card">
+                <h3>Bài tập đang học</h3>
+                <div class="assignment">
+                  <strong>Bài tập 3 · Đang mở</strong>Hạn nộp 13/11/2026 · 23:59<br />Theo trang
+                  khoá học trong spec
+                </div>
+                <p class="small">Dữ liệu đề bài</p>
+                <p style="font-size: 13px; margin-top: 4px">9, 10, 10, 11, 12, 12, 13, 45</p>
+                <button style="margin-top: 12px; font-size: 11px" data-source="course">
+                  Xem căn cứ trạng thái bài ↗
+                </button>
+              </section>
+              <section class="panel side-card">
+                <h3 class="marked-title"><span class="marker">2</span>Quyền điều khiển</h3>
+                <div class="control-row">
+                  <span class="control-icon">↶</span>
+                  <div>
+                    <strong>Tự làm · có hoàn tác</strong
+                    ><span>Chuyển TA khi cần, bạn có thể huỷ.</span>
+                  </div>
+                </div>
+                <div class="control-row">
+                  <span class="control-icon">✓</span>
+                  <div>
+                    <strong>Cần người xác nhận</strong><span>FAQ chỉ đăng sau khi TA duyệt.</span>
+                  </div>
+                </div>
+                <div class="control-row">
+                  <span class="control-icon">↗</span>
+                  <div><strong>Chuyển người</strong><span>Hỏi TA khi còn vướng.</span></div>
+                </div>
+                <div class="control-row">
+                  <span class="control-icon">−</span>
+                  <div>
+                    <strong>Giới hạn bài đang mở</strong
+                    ><span>Gợi ý tối đa bậc 2. Đáp số bị cấm.</span>
+                  </div>
+                </div>
+              </section>
+              <section class="panel side-card">
+                <label for="scenario" class="label">Chọn ca để trình diễn</label
+                ><select id="scenario" class="scenario-select">
+                  <option value="assignment">Ca khó 1 · Xin xác nhận đáp số</option>
+                  <option value="source-error">Ca khó 2 · Nguồn §3.3 cần xem lại</option>
+                  <option value="normal">Hỏi khái niệm có nguồn</option>
+                  <option value="missing">Nguồn “slide 12” bị thiếu</option>
+                  <option value="ambiguous">Câu hỏi mơ hồ</option>
+                  <option value="deadline">Xin gia hạn ngoài giờ</option>
+                  <option value="closed">Bài 2 đã có đáp án</option>
+                  <option value="unreleased">Buổi 7 chưa mở</option>
+                  <option value="unknown">Câu hỏi ngoài kịch bản</option></select
+                ><button class="primary" data-action="load-scenario">Nạp câu hỏi demo</button
+                ><button
+                  class="quiet"
+                  style="width: 100%; margin-top: 7px; font-size: 11px"
+                  data-action="reset"
+                >
+                  Bắt đầu lại phiên demo
+                </button>
+                <p class="footnote">
+                  Chuyển vai TA sẽ mô phỏng 08:00 ngày 14/11. Câu hỏi demo là dữ liệu giả lập.
+                </p>
+              </section>
+            </aside>
+          </div>
+        </section>
+        <section id="ta-screen" hidden aria-label="Màn hình TA">
+          <div class="page-head">
+            <div>
+              <div class="eyebrow">Mô phỏng vai TA</div>
+              <h1>Hàng chờ & duyệt FAQ</h1>
+              <p>Mọi thao tác duyệt và đăng diễn ra trong phiên demo này.</p>
+            </div>
+            <div class="clock">Chuyển thời gian mô phỏng<strong>08:00 · 14/11/2026</strong></div>
+          </div>
+          <div id="ta-content"></div>
+        </section>
+        <div class="proof-key" aria-label="Chú giải các vị trí đối chiếu HAX và PAIR">
+          <span><b class="marker">1</b>G1 & G2 · Phạm vi, độ chắc</span
+          ><span><b class="marker">2</b>G8 & G9 · Huỷ, sửa, xác nhận</span
+          ><span><b class="marker">3</b>G10 & G11 · PAIR Explainability & Trust</span>
+        </div>
+      </main>
+    </div>
+    <dialog id="source-dialog">
+      <div id="source-content"></div>
+      <div class="actions"><button data-action="close-source">Đóng</button></div>
+    </dialog>
+    <dialog id="edit-dialog">
+      <h2>Sửa ghi chú gửi TA</h2>
+      <label for="ticket-note">Bổ sung cho câu hỏi gốc</label
+      ><textarea id="ticket-note" maxlength="1000"></textarea>
+      <div class="actions">
+        <button data-action="close-edit">Huỷ</button
+        ><button class="primary" data-action="save-note">Lưu ghi chú</button>
+      </div>
+    </dialog>
+    <dialog id="confirm-dialog">
+      <h2>Xác nhận đăng FAQ</h2>
+      <p>
+        Người nhận là <strong>cả lớp trong mô phỏng</strong>. Câu hỏi đã ẩn danh. Nội dung đã duyệt
+        sẽ xuất hiện ở khu vực FAQ của phiên demo.
+      </p>
+      <blockquote id="confirm-content"></blockquote>
+      <div class="actions">
+        <button data-action="cancel-publish">Huỷ</button
+        ><button class="primary" data-action="confirm-publish">Xác nhận đăng</button>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <script>
+      "use strict";
+      const $ = (selector) => document.querySelector(selector);
+      const escapeHtml = (value) =>
+        String(value).replace(
+          /[&<>"']/g,
+          (character) =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character],
+        );
+      const scenarios = {
+        assignment: "Bài 3 em ra trung bình 15,25, trung vị 11,5, đúng không ạ?",
+        "source-error":
+          "Tài liệu §3.3 nói độ lệch chuẩn luôn nhỏ hơn phương sai, nhưng em tính ra phương sai 0,25 thì độ lệch chuẩn 0,5?",
+        normal: "Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?",
+        missing: "Cô ơi slide 12 buổi 3 nói gì về độ lệch chuẩn vậy ạ?",
+        ambiguous: "Cái độ lệch ấy là gì ạ, em đọc không hiểu.",
+        deadline: "22h40 rồi, cho em nộp muộn 1 tiếng được không, báo TA giúp em với.",
+        closed: "Bài tập 2 đã đóng, cho em ôn lại đáp án với.",
+        unreleased: "Buổi 7 p-value là gì ạ, em muốn đọc trước.",
+        unknown: "Em muốn hỏi về một mô hình dự báo chưa có trong demo.",
+      };
+      const sources = {
+        3.1: {
+          title: "§3.1 · Trung bình cộng",
+          text: "Trung bình cộng được tính bằng tổng các giá trị chia cho số lượng giá trị. Giá trị ngoại lai có thể ảnh hưởng mạnh tới trung bình cộng.",
+        },
+        3.2: {
+          title: "§3.2 · Trung vị",
+          text: "Sắp xếp dữ liệu tăng dần. Nếu số giá trị lẻ, lấy giá trị ở giữa. Nếu số giá trị chẵn, lấy trung bình cộng của hai giá trị giữa. Trung vị ít bị ảnh hưởng bởi giá trị ngoại lai.",
+        },
+        3.3: {
+          title: "§3.3 · Phương sai & độ lệch chuẩn",
+          text: "Độ lệch chuẩn là căn bậc hai của phương sai và có cùng đơn vị với dữ liệu gốc.",
+          suspect: "Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai",
+        },
+        course: {
+          title: "Trang khoá học · Bài tập 3",
+          text: "Bài tập 3 đang mở. Hạn nộp 13/11/2026 lúc 23:59. Dãy dữ liệu gồm 9, 10, 10, 11, 12, 12, 13, 45. TA trực từ 08:00 đến 22:00.",
+        },
+      };
+      let state = { kind: null, message: "", hint: 1, tickets: [], faq: null, published: null };
+      let editingTicketId = null;
+      let toastTimer;
+      const faqDraft =
+        "Độ lệch chuẩn là căn bậc hai của phương sai. Với phương sai 0,25, độ lệch chuẩn là 0,5. Khi phương sai nằm giữa 0 và 1, căn bậc hai lớn hơn phương sai. Tại 0 và 1, hai giá trị bằng nhau. Câu “luôn nhỏ hơn” trong §3.3 cần giảng viên xem lại.";
+
+      function notify(message) {
+        $("#toast").textContent = message;
+        $("#toast").hidden = false;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          $("#toast").hidden = true;
+        }, 3500);
+      }
+      function sourceButtons(ids) {
+        return `<div class="source-links"><span class="marker" title="G10, G11 và PAIR — Bằng chứng">3</span>${ids.map((id) => `<button data-source="${id}">${sources[id].title} ↗</button>`).join("")}</div>`;
+      }
+      function confidence(title, detail, warn = false) {
+        return `<div class="confidence ${warn ? "warn" : ""}"><strong>${title}</strong>${detail}</div>`;
+      }
+      function createTicket(kind) {
+        const existing = state.tickets.find(
+          (ticket) =>
+            ticket.message === state.message &&
+            ticket.kind === kind &&
+            ticket.status !== "cancelled",
+        );
+        if (existing) return existing;
+        const references = {
+          "source-error": "§3.3",
+          assignment: "§3.1, §3.2 · Trang khoá học",
+          deadline: "Trang khoá học · Giờ trực TA",
+          unreleased: "Đề cương buổi 7 · Chưa có nội dung bài học",
+        };
+        const reasons = {
+          "source-error": "Nghi sai §3.3 · Phản chứng 0,25 → 0,5",
+          assignment: "Học viên cần hỗ trợ Bài tập 3",
+          deadline: "Học viên xin gia hạn · AI không có quyền gia hạn",
+        };
+        const ticket = {
+          id: state.tickets.length + 1,
+          kind,
+          message: state.message,
+          status: "queued",
+          note: "",
+          refs: references[kind] || "Chưa có mục tài liệu phù hợp",
+          reason: reasons[kind] || "Học viên cần TA làm rõ câu hỏi",
+        };
+        state.tickets.push(ticket);
+        return ticket;
+      }
+      function renderTicket(ticket) {
+        const cancelled = ticket.status === "cancelled";
+        const read = ticket.status === "read";
+        return `<div class="transfer ${cancelled ? "cancelled" : ""}" data-ticket="${ticket.id}"><div class="marked-title"><span class="marker">2</span><strong>${cancelled ? "Đã huỷ yêu cầu" : read ? "TA đã mở phiếu" : "Đã gửi TA · Mô phỏng"} · #${String(ticket.id).padStart(3, "0")}</strong></div><p>${escapeHtml(ticket.reason)}</p><p><strong>Câu hỏi gốc</strong><br>${escapeHtml(ticket.message)}</p><p>Căn cứ ${escapeHtml(ticket.refs)}</p>${ticket.note ? `<p>Ghi chú của bạn · ${escapeHtml(ticket.note)}</p>` : ""}<p>${cancelled ? "Phiếu đã được rút khỏi hàng chờ." : read ? "TA đang xem trong mô phỏng 08:00 ngày 14/11." : "TA trả lời từ 08:00 ngày 14/11, sau hạn nộp 23:59 ngày 13/11."}</p><div class="actions">${cancelled ? `<button data-action="resend" data-id="${ticket.id}">Gửi lại TA</button>` : read ? '<span class="small">Việc huỷ và sửa kết thúc khi TA mở phiếu.</span>' : `<button data-action="cancel-ticket" data-id="${ticket.id}">Huỷ yêu cầu</button><button data-action="edit-ticket" data-id="${ticket.id}">Sửa ghi chú</button>`}</div></div>`;
+      }
+      function renderAnswer() {
+        switch (state.kind) {
+          case "assignment":
+            return (
+              confidence(
+                `Chế độ gợi ý bậc ${state.hint}/2 · Bài tập 3 đang mở`,
+                "Căn cứ trạng thái bài từ trang khoá học. Giới hạn hỗ trợ được áp dụng tới 23:59 ngày 13/11/2026.",
+              ) +
+              "<p>Bài 3 đang mở tới <strong>23:59 hôm nay</strong> (theo trang khoá học), nên mình không xác nhận đáp số đúng hay sai và không tính hộ. Hiện đã qua giờ trực TA (08:00–22:00), nên nếu chuyển TA thì từ <strong>08:00 sáng mai</strong> mới có phản hồi (sau hạn nộp).</p>" +
+              sourceButtons(["3.1", "3.2", "course"]) +
+              '<div class="answer-block"><strong>Tự kiểm trung bình cộng · §3.1</strong>Cộng đủ 8 mức lương rồi chia cho 8.</div><div class="answer-block"><strong>Tự kiểm trung vị · §3.2</strong>Sắp xếp đủ 8 giá trị tăng dần. Với 8 giá trị, bạn đã lấy trung bình cộng của hai giá trị ở vị trí thứ 4 và thứ 5 chưa?</div>' +
+              (state.hint === 2
+                ? '<div class="answer-block"><strong>Gợi ý bậc 2 · Kiểm tra phương pháp</strong>Đối chiếu quy tắc số chẵn trong §3.2. Bạn hãy tự đánh dấu hai vị trí giữa trên dãy đã sắp xếp rồi viết phép tính trên bảng tính.</div>'
+                : "") +
+              `<div class="actions">${state.hint === 1 ? '<button data-action="next-hint">Gợi ý bước tiếp</button>' : '<button data-action="stuck">Vẫn kẹt sau bậc 2</button>'}<button class="primary" data-action="ask-ta">Hỏi TA ↗</button></div><p class="hint">${state.hint === 2 ? "Đã tới giới hạn bậc 2. Bạn có thể tự kiểm hoặc chuyển TA." : "Gợi ý tối đa bậc 2. Bạn chọn bước tiếp để tiếp tục."} TA trả lời từ 08:00 sáng mai, sau hạn nộp.</p>`
+            );
+          case "source-error":
+            return (
+              confidence(
+                "§3.3 · Cần xem lại",
+                "Chưa kiểm chứng bởi giảng viên. Phản chứng toán học được trình bày bên dưới.",
+                true,
+              ) +
+              "<p>Phép tính của bạn là <strong>đúng về mặt toán học</strong>, nên câu trong §3.3 cần được xem lại.</p>" +
+              sourceButtons(["3.3"]) +
+              '<div class="answer-block suspect"><strong>Câu cần xem lại trong tài liệu</strong>“Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai”<div class="formula">√0,25 = 0,5 &gt; 0,25</div>Khi phương sai nằm giữa 0 và 1, căn bậc hai lớn hơn phương sai. Tại 0 và 1, hai giá trị bằng nhau. Quan hệ “nhỏ hơn” đúng khi phương sai &gt; 1.</div><div class="answer-block"><strong>Kiến thức chắc chắn để học tiếp</strong>Độ lệch chuẩn là căn bậc hai của phương sai và có cùng đơn vị với dữ liệu gốc.</div><p class="small">Bạn có thể báo thêm cho giảng viên để kiểm tra câu trong §3.3.</p>' +
+              `<div class="confidence warn"><strong>${state.faq?.status === "published" ? "FAQ đã được TA duyệt và đăng trong demo" : state.faq?.status === "discarded" ? "TA đã bỏ nháp FAQ" : "Đã tạo nháp FAQ ẩn danh · Chờ TA duyệt"}</strong>Nháp nằm trong hàng chờ TA của phiên mô phỏng.</div>`
+            );
+          case "normal":
+            return (
+              confidence(
+                "Có căn cứ trong §3.1 & §3.2",
+                "Giải thích khái niệm trong phạm vi tài liệu buổi 3.",
+              ) +
+              '<p><strong>Trung bình cộng</strong> là tổng chia số lượng. <strong>Trung vị</strong> là giá trị giữa của dãy đã sắp xếp.</p><div class="answer-block"><strong>Ví dụ tự đặt · Giá nhà</strong>Với 1, 2, 2, 3, 20 tỷ, trung bình là 5,6 tỷ, trung vị là 2 tỷ. Giá trị 20 kéo trung bình lên mạnh. Trung vị hữu ích khi mô tả giá trị điển hình của dữ liệu có ngoại lai.</div>' +
+              sourceButtons(["3.1", "3.2"])
+            );
+          case "missing":
+            return (
+              confidence(
+                "Thiếu nguồn “slide 12”",
+                "Tài liệu hiện có chỉ đánh mục §3.1–§3.5.",
+                true,
+              ) +
+              "<p>Mình chưa tìm được slide 12 trong tài liệu được cung cấp. Phần gần nhất là <strong>§3.3 về phương sai và độ lệch chuẩn</strong>, có một câu cần xem lại.</p>" +
+              sourceButtons(["3.3"]) +
+              '<div class="actions"><button data-action="choose-sd">Có, em hỏi §3.3</button><button data-action="clarify">Em muốn nói phần khác</button></div>'
+            );
+          case "ambiguous":
+            return (
+              confidence("Chưa rõ ý bạn", "Cần chọn khái niệm trước khi giải thích.", true) +
+              '<p>Bạn hỏi độ lệch chuẩn (§3.3) hay dữ liệu bị lệch (§3.2)?</p><div class="actions"><button data-action="choose-sd">Độ lệch chuẩn · §3.3</button><button data-action="choose-skew">Dữ liệu bị lệch · §3.2</button></div>'
+            );
+          case "sd":
+            return (
+              confidence(
+                "§3.3 có câu cần xem lại",
+                "Dùng định nghĩa và đối chiếu cảnh báo trong đoạn gốc.",
+                true,
+              ) +
+              "<p>Độ lệch chuẩn là căn bậc hai của phương sai và cùng đơn vị với dữ liệu gốc. Câu “luôn nhỏ hơn phương sai” trong §3.3 cần xem lại. Bạn có thể thử phản chứng 0,25 → 0,5.</p>" +
+              sourceButtons(["3.3"]) +
+              '<div class="actions"><button data-action="report-source">Xem phản chứng và báo TA</button><button data-action="choose-skew">Em hỏi dữ liệu bị lệch</button></div>'
+            );
+          case "skew":
+            return (
+              confidence("Có căn cứ trong §3.2", "Đã chọn nghĩa “dữ liệu bị lệch”.") +
+              "<p>Dữ liệu như thu nhập, giá nhà có thể có một số giá trị lớn kéo trung bình lên. Bạn có thể xem trung vị để mô tả giá trị điển hình.</p>" +
+              sourceButtons(["3.2"]) +
+              '<div class="actions"><button data-action="choose-sd">Em hỏi độ lệch chuẩn</button></div>'
+            );
+          case "deadline":
+            return (
+              confidence(
+                "Giới hạn quyền · AI không thể gia hạn",
+                "Hạn lấy từ trang khoá học. TA trực 08:00–22:00.",
+                true,
+              ) +
+              "<p>Hạn Bài tập 3 là <strong>23:59 ngày 13/11/2026</strong>. Mình có thể chuyển yêu cầu tới TA. TA trả lời từ <strong>08:00 ngày 14/11</strong>, sau hạn nộp. Bạn nên nộp phần đã làm trước 23:59.</p>" +
+              sourceButtons(["course"])
+            );
+          case "closed":
+            return (
+              confidence(
+                "Bài tập 2 · Đã đóng và công bố đáp án",
+                "Trạng thái và đáp án được ghi trong spec của nhóm.",
+              ) +
+              '<p>Đáp án Bài tập 2 đã công bố là <strong>6</strong>. Để ôn cách tính trung bình, lấy tổng các giá trị chia cho số lượng giá trị.</p><p class="hint">Demo chưa có dãy năm giá trị gốc của Bài 2 để trình bày phép tính đầy đủ.</p>' +
+              sourceButtons(["3.1"])
+            );
+          case "unreleased":
+            return (
+              confidence(
+                "Buổi 7 · Chưa có tài liệu",
+                "Hiện chỉ có tên buổi trong đề cương.",
+                true,
+              ) +
+              '<p>Buổi 7 sẽ học kiểm định giả thuyết và p-value.</p><div class="actions"><button data-action="ask-ta">Hỏi TA ↗</button></div>'
+            );
+          case "clarify":
+            return (
+              confidence(
+                "Cần bạn cung cấp thêm nguồn",
+                "Chưa xác định được đoạn bạn muốn hỏi.",
+                true,
+              ) +
+              '<p>Bạn gửi mã mục hoặc dán câu trong tài liệu vào ô câu hỏi để làm rõ với TA nhé.</p><div class="actions"><button data-action="ask-ta">Hỏi TA ↗</button></div>'
+            );
+          default:
+            return (
+              confidence(
+                "Chưa có phản hồi đã kiểm chứng cho câu này",
+                "Demo xử lý các ca cố định. Chưa có nguồn phù hợp cho câu hỏi vừa nhập.",
+                true,
+              ) +
+              '<p>Bạn có thể chọn một ca demo hoặc chuyển nguyên văn câu hỏi này tới TA.</p><div class="actions"><button data-action="ask-ta">Hỏi TA ↗</button></div>'
+            );
+        }
+      }
+      function renderLearner() {
+        $("#scenario-clock").textContent =
+          `${state.kind === "source-error" ? "23:00" : "22:40"} · 13/11/2026`;
+        if (!state.kind) {
+          $("#conversation").innerHTML =
+            '<div class="intro"><span class="spark" aria-hidden="true">✧</span><h2>Bạn đang vướng ở đâu?</h2><p>Chọn ca demo, gửi câu hỏi, rồi tự đối chiếu nguồn hoặc nhờ TA hỗ trợ.</p></div>';
+          return;
+        }
+        const tickets = state.tickets.filter((ticket) => ticket.message === state.message);
+        $("#conversation").innerHTML =
+          `<div class="user-message">${escapeHtml(state.message)}</div><div class="message-meta">Học viên demo · ${state.kind === "source-error" ? "23:00" : "22:40"}</div><div class="answer"><div class="answer-title"><span class="spark" aria-hidden="true">✧</span>TRỢ LÝ AI · PHẢN HỒI MÔ PHỎNG</div>${renderAnswer()}${tickets.map(renderTicket).join("")}</div>`;
+        $("#queue-count").textContent =
+          state.tickets.filter((ticket) => ticket.status === "queued").length || "";
+      }
+      function classify(message) {
+        const text = message.toLocaleLowerCase("vi");
+        const exact = Object.keys(scenarios).find(
+          (key) => scenarios[key].toLocaleLowerCase("vi") === text,
+        );
+        if (exact) return exact;
+        if (/bài\s*(tập\s*)?3/.test(text)) return "assignment";
+        if (text.includes("§3.3") && text.includes("0,25")) return "source-error";
+        if (text.includes("slide 12")) return "missing";
+        return "unknown";
+      }
+      function sendMessage(message) {
+        state.message = message;
+        state.kind = classify(message);
+        state.hint = 1;
+        if (state.kind === "source-error") {
+          createTicket("source-error");
+          if (!state.faq) state.faq = { text: faqDraft, status: "draft" };
+        }
+        if (state.kind === "deadline") createTicket("deadline");
+        renderLearner();
+      }
+      function renderTA() {
+        const tickets = state.tickets.filter((ticket) => ticket.status !== "cancelled");
+        $("#queue-count").textContent =
+          state.tickets.filter((ticket) => ticket.status === "queued").length || "";
+        $("#ta-content").innerHTML =
+          `<div class="ta-grid"><section class="panel ta-card"><div class="eyebrow">Chuyển người · chuyen_TA</div><h2 class="marked-title"><span class="marker">2</span>Phiếu hỗ trợ (${tickets.length})</h2><p class="small">Mở phiếu để tiếp nhận. Học viên được huỷ và sửa ghi chú tới khi TA mở.</p>${tickets.length ? tickets.map((ticket) => `<article class="ticket ${ticket.status === "read" ? "read" : ""}"><h3>#${String(ticket.id).padStart(3, "0")} · ${escapeHtml(ticket.reason)}</h3><p>${escapeHtml(ticket.message)}</p><p class="small" style="margin-top:8px">Căn cứ ${escapeHtml(ticket.refs)}<br>Bài tập 3 đang mở tại thời điểm hỏi<br>${ticket.kind === "assignment" ? `Đã gợi ý tới bậc ${ticket.hint || 1}/2` : ""}</p>${ticket.note ? `<p>Ghi chú · ${escapeHtml(ticket.note)}</p>` : ""}<div class="actions">${ticket.status === "read" ? '<span class="status">TA đã tiếp nhận · Mô phỏng</span>' : `<button data-action="open-ticket" data-id="${ticket.id}">Mở phiếu</button>`}</div></article>`).join("") : '<div class="empty">Chưa có yêu cầu trong hàng chờ. Gửi câu hỏi ở màn hình học viên để bắt đầu.</div>'}</section><section class="panel ta-card"><div class="eyebrow">Cần TA duyệt · dang_FAQ</div><h2 class="marked-title"><span class="marker">1</span>Duyệt FAQ trước khi đăng</h2>${renderFAQ()}</section></div>`;
+      }
+      function renderFAQ() {
+        if (!state.faq)
+          return '<div class="empty">Chưa có nháp FAQ. Ca nguồn §3.3 sẽ tạo nháp ẩn danh để TA xem.</div>';
+        if (state.faq.status === "discarded")
+          return '<div class="empty">TA đã bỏ nháp FAQ trong mô phỏng.</div>';
+        if (state.faq.status === "published")
+          return `<div class="published"><h3>Đã đăng FAQ · Mô phỏng</h3><p>Người xem · Cả lớp trong phiên demo</p><p>${escapeHtml(state.published)}</p><div class="actions"><button data-action="remove-faq">Gỡ FAQ</button></div></div>`;
+        return `<span class="badge-red">Cờ cảnh báo · Nghi sai tài liệu §3.3</span><div class="confidence warn"><strong>Chờ TA duyệt · Chưa đăng cho cả lớp</strong>Nháp được tạo tự động. TA đọc và xác nhận nội dung trước khi đăng.</div><p><strong>Câu hỏi đã ẩn danh</strong><br>Độ lệch chuẩn có luôn nhỏ hơn phương sai?</p><p class="small" style="margin-top:10px">Lượt hỏi trong demo · ${state.tickets.filter((ticket) => ticket.kind === "source-error").length} phiếu, từ 1 học viên giả lập</p>${sourceButtons(["3.3"])}<label for="faq-text"><strong>Nội dung nháp</strong></label><textarea id="faq-text" readonly>${escapeHtml(state.faq.text)}</textarea><p class="small">TA có thể chọn “Sửa rồi đăng” để chỉnh nháp trước khi xác nhận.</p><div class="actions"><span class="marker">2</span><button class="primary" data-action="publish">Đăng</button><button data-action="edit-faq">Sửa rồi đăng</button><button class="danger" data-action="discard-faq">Bỏ</button></div>`;
+      }
+      function showRole(role) {
+        const isTA = role === "ta";
+        $("#ta-availability").textContent = isTA ? "TA đang trực · Mô phỏng" : "TA đã hết giờ trực";
+        $("#ta-hours").innerHTML = isTA
+          ? "Giờ trực 08:00–22:00<br>Đang mô phỏng sáng 14/11"
+          : "Giờ trực 08:00–22:00<br>Tiếp nhận từ 08:00 ngày 14/11";
+        $("#learner-screen").hidden = isTA;
+        $("#ta-screen").hidden = !isTA;
+        $("#ta-tab").setAttribute("aria-selected", String(isTA));
+        $("#learner-tab").setAttribute("aria-selected", String(!isTA));
+        if (isTA) renderTA();
+        else renderLearner();
+      }
+      function showSource(id) {
+        const source = sources[id];
+        $("#source-content").innerHTML =
+          `<div class="eyebrow">Bằng chứng AI dựa vào</div><h2 class="marked-title"><span class="marker">3</span>${source.title}</h2><p class="small">Bản tóm lược phục vụ demo từ spec.md. Tài liệu khoá học gốc chưa được cung cấp.</p><blockquote>${escapeHtml(source.text)}${source.suspect ? `<br><br><mark>“${escapeHtml(source.suspect)}”</mark>` : ""}</blockquote>${source.suspect ? '<div class="confidence warn"><strong>Cần xem lại · Chưa kiểm chứng bởi giảng viên</strong>Câu được đánh dấu trích nguyên văn từ spec của nhóm. Ví dụ 0,25 → 0,5 cho thấy giới hạn của phát biểu “luôn nhỏ hơn”.</div>' : ""}`;
+        $("#source-dialog").showModal();
+      }
+      $("#message-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const message = $("#message").value.trim();
+        if (!message) return;
+        sendMessage(message);
+        $("#message").value = "";
+      });
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        if (button.dataset.source) {
+          showSource(button.dataset.source);
+          return;
+        }
+        const ticket = state.tickets.find((item) => item.id === Number(button.dataset.id));
+        switch (button.dataset.action) {
+          case "learner":
+            showRole("learner");
+            break;
+          case "ta":
+            showRole("ta");
+            break;
+          case "load-scenario":
+            $("#message").value = scenarios[$("#scenario").value];
+            $("#message").focus();
+            break;
+          case "reset":
+            state = { kind: null, message: "", hint: 1, tickets: [], faq: null, published: null };
+            $("#message").value = "";
+            $("#queue-count").textContent = "";
+            showRole("learner");
+            notify("Đã bắt đầu phiên demo mới.");
+            break;
+          case "close-source":
+            $("#source-dialog").close();
+            break;
+          case "next-hint":
+            state.hint = 2;
+            renderLearner();
+            break;
+          case "stuck":
+          case "ask-ta": {
+            const created = createTicket(state.kind);
+            created.hint = state.hint;
+            renderLearner();
+            notify("Đã tạo phiếu TA trong mô phỏng. Bạn có thể huỷ yêu cầu.");
+            break;
+          }
+          case "cancel-ticket":
+            if (ticket?.status === "queued") {
+              ticket.status = "cancelled";
+              renderLearner();
+              notify("Đã huỷ phiếu TA trong mô phỏng.");
+            }
+            break;
+          case "resend":
+            if (ticket?.status === "cancelled") {
+              ticket.status = "queued";
+              renderLearner();
+              notify("Đã gửi lại phiếu TA trong mô phỏng.");
+            }
+            break;
+          case "edit-ticket":
+            if (ticket?.status === "queued") {
+              editingTicketId = ticket.id;
+              $("#ticket-note").value = ticket.note;
+              $("#edit-dialog").showModal();
+            }
+            break;
+          case "close-edit":
+            $("#edit-dialog").close();
+            break;
+          case "save-note": {
+            const editing = state.tickets.find((item) => item.id === editingTicketId);
+            if (editing?.status === "queued") editing.note = $("#ticket-note").value.trim();
+            $("#edit-dialog").close();
+            renderLearner();
+            break;
+          }
+          case "open-ticket":
+            if (ticket?.status === "queued") {
+              ticket.status = "read";
+              renderTA();
+            }
+            break;
+          case "choose-sd":
+            state.kind = "sd";
+            renderLearner();
+            break;
+          case "choose-skew":
+            state.kind = "skew";
+            renderLearner();
+            break;
+          case "clarify":
+            state.kind = "clarify";
+            renderLearner();
+            $("#message").focus();
+            break;
+          case "report-source":
+            state.kind = "source-error";
+            createTicket("source-error");
+            if (!state.faq) state.faq = { text: faqDraft, status: "draft" };
+            renderLearner();
+            break;
+          case "edit-faq":
+            $("#faq-text").readOnly = false;
+            $("#faq-text").focus();
+            button.textContent = "Đang sửa · Bấm Đăng để duyệt";
+            break;
+          case "publish":
+            if (state.faq?.status === "draft") {
+              const text = $("#faq-text").value.trim();
+              if (!text) {
+                notify("Cần có nội dung FAQ trước khi đăng.");
+                break;
+              }
+              state.faq.text = text;
+              $("#confirm-content").textContent = text;
+              $("#confirm-dialog").showModal();
+            }
+            break;
+          case "cancel-publish":
+            $("#confirm-dialog").close();
+            break;
+          case "confirm-publish":
+            if (state.faq?.status === "draft") {
+              state.faq.status = "published";
+              state.published = state.faq.text;
+              $("#confirm-dialog").close();
+              renderTA();
+              notify("FAQ đã được TA duyệt và đăng trong phiên demo.");
+            }
+            break;
+          case "discard-faq":
+            if (state.faq?.status === "draft") {
+              state.faq.status = "discarded";
+              renderTA();
+            }
+            break;
+          case "remove-faq":
+            state.published = null;
+            state.faq.status = "discarded";
+            renderTA();
+            notify("Đã gỡ FAQ khỏi phiên demo.");
+            break;
+        }
+      });
+      renderLearner();
+    </script>
+  </body>
+</html>

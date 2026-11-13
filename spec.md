@@ -361,18 +361,49 @@
 
 ## §5. Prototype _(chặng 5 — Phụ trách: Nguyễn Đức Nhật)_
 
-- **Link hoặc file trong `prototype/`:** [...]
-- **Công cụ sử dụng:** [...]
-- **Phần nào mock / Có lời gọi AI thật không:** [...]
-- **Ảnh chụp màn hình đánh số (đặt ảnh trong thư mục `prototype/`):**
-  - _Số [1]:_ Thể hiện gì · Nguyên tắc HAX/PAIR nào (khớp §3) · Mức tự chủ nào (khớp §4)
-  - _Số [2]:_ Thể hiện gì · Nguyên tắc HAX/PAIR nào (khớp §3) · Mức tự chủ nào (khớp §4)
-  - _Số [3]:_ [...]
-- **Quyết định thiết kế cách hiện độ chắc/bằng chứng & điều khiển mức tự chủ:**
-  - _Đã nghĩ tới cách nào khác:_ [...]
-  - _Chọn cách này:_ [...]
-  - _Vì sao chọn:_ [...]
-  - _Vì sao loại các cách kia:_ [...]
+- **Link hoặc file trong `prototype/`**
+  - Chạy [prototype/index.html](prototype/index.html) bằng trình duyệt. Có **2 màn hình bấm qua lại được**, gồm **Học viên** và **Hàng chờ TA**.
+  - [Hướng dẫn demo và bảng đối chiếu chi tiết](prototype/README.md).
+
+- **Công cụ sử dụng**
+  - HTML/CSS/JavaScript thuần, chạy trực tiếp từ file HTML.
+  - Playwright điều khiển Chrome để kiểm thử tương tác và chụp ảnh bằng chứng. Đã kiểm tra cả giao diện di động 390 × 844.
+
+- **Phần nào mock / Có lời gọi AI thật không**
+  - Phản hồi AI dùng kịch bản cố định và một số mẫu câu nhận diện. Các thao tác `tra_cuu_tai_lieu`, `goi_y_bai_tap`, `chuyen_TA`, `soan_FAQ` và `dang_FAQ` đều được mô phỏng bằng trạng thái trong bộ nhớ trình duyệt. Tải lại trang sẽ bắt đầu phiên mới.
+  - Câu hỏi học viên, phiếu TA và nháp FAQ là dữ liệu giả lập. Giao diện gắn nhãn **Trợ lý AI**, **Prototype** và **Mô phỏng**. Câu ngoài kịch bản nhận thông báo chưa có phản hồi đã kiểm chứng, kèm đường chuyển TA.
+  - Bối cảnh học viên cố định vào tối **13/11/2026**, Bài tập 3 đang mở tới **23:59**. Chuyển tab TA mô phỏng **08:00 ngày 14/11/2026** để trình diễn bước tiếp nhận và duyệt sau giờ trực.
+  - Tài liệu khoá học gốc chưa có trong workspace. Hộp nguồn dùng **bản tóm lược từ spec**, có nhãn giải thích ngay trong hộp. Riêng câu nghi sai ở §3.3 được giữ nguyên văn từ §3.2 của spec và tô vàng khi mở nguồn.
+
+- **Ảnh chụp màn hình đánh số**
+  - **Ảnh [1] — Bài tập đang mở.** Thể hiện KB 8, chế độ gợi ý bậc 2/2, căn cứ §3.1–§3.2, nút **Hỏi TA** và phiếu có **Huỷ yêu cầu / Sửa ghi chú**. Đối chiếu **G1 & G2**, **G8 & G9**, **G11 + PAIR Explainability & Trust**. Mức tự chủ gồm tra cứu/gợi ý **tự làm**, chuyển TA **có hoàn tác** và giới hạn đáp số **cấm**. [Xem ảnh 01](prototype/01-bai-dang-mo.png).
+  - **Ảnh [2] — Nguồn §3.3 cần xem lại.** Thể hiện KB 2, cờ chưa kiểm chứng bởi giảng viên, câu nguồn, phản chứng **√0,25 = 0,5 > 0,25**, khung kiến thức để học tiếp, phiếu TA tự gửi có hoàn tác và nháp FAQ chờ duyệt. Đối chiếu đủ ba nhóm nguyên tắc ở §3.4. Mức tự chủ gồm `chuyen_TA` **tự làm có hoàn tác**, `soan_FAQ` **tự làm** và `dang_FAQ` **cần TA duyệt**. [Xem ảnh 02](prototype/02-nguon-can-xem-lai.png).
+  - **Ảnh [3] — Hàng chờ phía TA.** Thể hiện phiếu báo lỗi, câu hỏi ẩn danh, cờ đỏ §3.3, badge nguồn, số phiếu trong demo và nháp FAQ với **Đăng / Sửa rồi đăng / Bỏ**. Đối chiếu **G1 & G2**, **G8 & G9**, **G11 + PAIR Explainability & Trust**. Mức tự chủ **cần người duyệt** được thực hiện bằng hộp xem trước nội dung, đối tượng cả lớp và nút **Xác nhận đăng** sau khi bấm Đăng. [Xem ảnh 03](prototype/03-ta-xac-nhan.png).
+
+**Vị trí đối chiếu nguyên tắc trên ảnh.** Các chấm **1, 2, 3** trên giao diện chỉ nhóm bằng chứng, dùng thống nhất ở cả hai màn hình. Số ảnh chỉ file chụp.
+
+| Nguyên tắc đã chọn ở §3.4 | Vị trí cụ thể trên prototype | Ảnh bằng chứng |
+| --- | --- | --- |
+| **G1 — Làm rõ hệ thống làm được gì** | Chấm **1**, nhãn Trợ lý AI và chế độ gợi ý bậc 1–2, tương ứng `[UI-1a]`, `[UI-1b]`. | [Ảnh 01](prototype/01-bai-dang-mo.png) |
+| **G2 — Làm rõ hệ thống làm tốt đến đâu** | Chấm **1**, thẻ §3.3 cần xem lại, ghi rõ chưa kiểm chứng bởi giảng viên, tương ứng `[UI-1b]`. Nháp FAQ có trạng thái chờ TA duyệt `[UI-1c]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+| **G8 — Gạt bỏ dễ dàng** | Chấm **2**, nút Huỷ yêu cầu trên phiếu TA tự tạo, tương ứng `[UI-2a]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+| **G9 — Sửa dễ dàng** | Chấm **2**, nút Sửa ghi chú trên phiếu TA, tương ứng `[UI-2b]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+| **G10 — Thu hẹp phạm vi khi nghi ngờ** | Chấm **3**, khối câu cần xem lại và khối kiến thức chắc chắn để học tiếp, tương ứng `[UI-3b]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+| **G11 — Giải thích vì sao** | Chấm **3**, câu §3.3 được đối chiếu với phản chứng 0,25 → 0,5 và badge mở nguồn `[UI-3a]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+| **PAIR Explainability & Trust** | Chấm **3**, badge §3.3 mở được phần nguồn để người học tự đối chiếu, cùng cờ cần xem lại và khung giải thích `[UI-3a]`, `[UI-3b]`. | [Ảnh 02](prototype/02-nguon-can-xem-lai.png) |
+
+**Luồng demo từ đầu tới cuối**
+
+1. **KB 8 — Xin xác nhận đáp số.** Chọn Ca khó 1 → **Nạp câu hỏi demo** → **Gửi** → xem giới hạn và mở badge nguồn → **Gợi ý bước tiếp** `[UI-2c]` → **Vẫn kẹt sau bậc 2** hoặc **Hỏi TA** `[UI-2d]` → nhận phiếu với giờ phản hồi sau hạn nộp → thử **Sửa ghi chú / Huỷ yêu cầu / Gửi lại TA** → chuyển tab TA và **Mở phiếu**. Học viên thấy trạng thái TA đã tiếp nhận khi quay lại.
+2. **KB 2 — Nguồn có câu nghi sai.** Bắt đầu lại phiên → chọn Ca khó 2 → nạp và gửi câu hỏi → xem phản chứng, mở nguồn §3.3 → nhận phiếu TA tự gửi và nháp FAQ → chuyển tab TA → xem phiếu, cảnh báo và nháp → **Đăng** → thử **Huỷ** để giữ nháp → **Sửa rồi đăng**, chỉnh nội dung → **Đăng / Xác nhận đăng** → thấy FAQ đã đăng trong mô phỏng. Có thể **Bỏ** nháp hoặc **Gỡ FAQ** đã đăng.
+
+- **Quyết định thiết kế cách hiện độ chắc/bằng chứng & điều khiển mức tự chủ**
+  - _Đã nghĩ tới cách nào khác._ Hiện điểm tin cậy dạng phần trăm, chỉ gắn badge nguồn, hoặc dùng cùng một bước xác nhận cho mọi hành động.
+  - _Chọn cách này._ Hiện độ chắc bằng câu gắn với căn cứ như **Có căn cứ trong §3.1 & §3.2**, **Thiếu nguồn** và **Chưa kiểm chứng bởi giảng viên**. Badge mở được phần nguồn. Câu cần xem lại và kiến thức để học tiếp có hai khung riêng. Quyền điều khiển đi cùng thao tác thực tế, gồm huỷ/sửa phiếu TA, mở gợi ý tới bậc 2 và TA xác nhận FAQ trước khi đăng.
+  - _Vì sao chọn._ Người học nhìn được AI dựa vào đâu, phần nào cần kiểm chứng và việc gì làm được ngay lúc sát hạn. Chuyển TA có hoàn tác giúp báo lỗi nguồn mà vẫn cho học viên rút lại. FAQ cần TA duyệt giúp kiểm tra nội dung trước khi hiển thị cho cả lớp, khớp cost-of-error ở §4.
+  - _Vì sao loại các cách kia._ Demo chưa có cơ sở hiệu chỉnh điểm tin cậy dạng phần trăm. Badge nguồn đơn lẻ chưa thể hiện mâu thuẫn ngay trong nguồn §3.3. Yêu cầu xác nhận trước mọi lần chuyển TA làm tăng khả năng học viên bỏ qua việc báo lỗi tài liệu. Cho FAQ tự đăng làm tăng phạm vi ảnh hưởng của câu sai.
+
+- **Kiểm chứng prototype.** Đã thao tác qua hai ca khó và các nhánh xem nguồn, giới hạn gợi ý, sửa/huỷ/gửi lại phiếu, TA tiếp nhận, sửa/duyệt/huỷ/bỏ/gỡ FAQ. Đã thử ca bình thường, thiếu slide, câu hỏi mơ hồ, xin gia hạn, bài đã đóng, buổi chưa mở và câu ngoài kịch bản. Ba ảnh bằng chứng được chụp từ giao diện đang chạy.
 
 ---
 
