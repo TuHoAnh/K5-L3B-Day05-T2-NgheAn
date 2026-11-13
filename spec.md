@@ -9,43 +9,81 @@
 | Phan Trần Mạnh Cường | 2A202603810 | §4 Mức tự chủ của 4 tool (cost-of-error, thử nghiệm 3 kịch bản)        |
 | Nguyễn Đức Nhật      | 2A202603812 | §5 Prototype (dựng UI bấm được, ảnh đánh số) & tích hợp logic/AI       |
 
-<!-- ================= PHẦN CỦA: VÕ HỒNG LƯƠNG ================= -->
+## §1. Lát cắt & phạm vi
 
-## §1. Lát cắt & phạm vi _(Phụ trách: Võ Hồng Lương)_
-
-- **Lát cắt (chép nguyên văn từ Track T2):**
+- **Lát cắt:**
 
   > Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
 
-- **3 việc tính năng KHÔNG làm (mỗi việc 1 câu vì sao):**
-  1. [Việc không làm 1] — **Vì sao:** [...]
-  2. [Việc không làm 2] — **Vì sao:** [...]
-  3. [Việc không làm 3] — **Vì sao:** [...]
+### 1.1. Ai làm việc gì, AI quyết định gì?
+
+- Ai làm việc gì: Học viên hỏi bài lúc tối muộn và lúc đó đang không còn ai để hỏi trực tiếp.
+- AI tham gia vào để thực hiện 1 trong các quyết định: giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hoặc nói thẳng "tài liệu không có, hỏi giảng viên".
+
+### 1.2. Hôm nay sản phẩm thật làm thế nào, AI được thêm quyền gì?
+
+- **Hôm nay (ChatGPT Study mode):** người học bật Study mode rồi hỏi; trợ lý hỏi ngược, gợi ý từng bước, không đưa đáp án ngay. Nhưng trợ lý **không gắn với tài liệu của khoá** (không biết buổi 3 có gì, hạn nộp là khi nào) và **không có TA hay giảng viên đứng sau**, nên không có ai để chuyển câu hỏi.
+- **Khi tích hợp vào trang khoá học, AI được thêm 4 quyền:**
+  1. Đọc tài liệu buổi đã mở và trích mã mục (`tra_cuu_tai_lieu`). Trước đây học viên tự lật tài liệu.
+  2. Gửi gợi ý cho bài tập của khoá (`goi_y_bai_tap`). Trước đây học viên chỉ có đề bài.
+  3. Chuyển câu hỏi cho TA (`chuyen_TA`). Trước đây học viên tự nhắn TA và chờ.
+  4. Đăng câu hỏi và trả lời lên FAQ cả lớp (`dang_FAQ`). Trước đây chỉ TA hoặc giảng viên đăng.
+
+### 1.3. Nếu AI sai thì ai chịu, chịu gì, sai hướng nào đắt hơn?
+
+- **Ai chịu, chịu gì:**
+  - **Học viên:** học sai mà không biết, hoặc chép đáp án nên không hiểu bài; cái sai theo sang các buổi sau và bài kiểm tra.
+  - **Cả lớp:** nếu cái sai được đăng lên FAQ, một câu sai thành nhiều người học sai.
+  - **Giảng viên, TA:** phải đi gỡ lại, và học viên mất niềm tin vào trợ lý.
+- **Hướng đắt hơn:** giảng khi tài liệu không có, xác nhận câu tài liệu viết sai, đưa hoặc xác nhận đáp số bài đang mở. Cái sai này **âm thầm** (học viên tin vì AI có trích nguồn, không ai báo) và **không đảo lại được** (đáp số đã chép, kiến thức sai đã học).
+- **Hướng rẻ hơn nhưng vẫn có giá:** từ chối, hỏi lại mãi, đẩy hết sang TA. Học viên thấy ngay và không học sai, nhưng lúc 23h đêm hạn nộp TA đã nghỉ, nên dè dặt quá mức nghĩa là học viên kẹt và bỏ bài.
+- **Kết luận:** thiết kế ưu tiên chặn hướng rủi ro cao, nhưng mỗi lần từ chối phải kèm một việc học viên làm được ngay.
+
+### 1.4. Tính năng KHÔNG làm 
+
+  1. **Không đưa và không xác nhận đáp số của bài đang mở.** — Vì gợi ý đã gửi qua `goi_y_bai_tap` thì học viên đã chép, không lấy lại được, đi ngược mục tiêu "không chép đáp án" của lát cắt.
+  2. **Không giảng chi tiết các buổi chưa mở; chỉ nói buổi nào sẽ học và giới thiệu tối đa một câu.** — Vì buổi chưa mở không có tài liệu, mọi câu giảng đều là đoán, học viên dễ học sai trước khi giảng viên dạy.
+  3. **Không gia hạn và không hứa gia hạn nộp bài.** — Vì không có tool nào làm việc này và hạn nộp chỉ lấy từ trang khoá học; AI hứa sai thì học viên nộp muộn và mất điểm.
+  4. **Không tự sửa tài liệu và không khẳng định thay giảng viên rằng một câu trong tài liệu đúng hay sai.** — Vì chỉ giảng viên có quyền sửa tài liệu; AI chỉ đánh dấu câu cần xem lại và chuyển TA, nếu AI tự "sửa" sai thì học viên học theo bản sai.
+  5. **Không chấm điểm, không nộp bài thay học viên.** — Vì không có tool nào chấm hay nộp bài, và điểm do giảng viên quyết; AI "chấm thử" một bài đang mở thì cũng chính là xác nhận đáp số (việc số 1), còn nộp hộ thì học viên không biết bài mình nộp có gì.
+  6. **Không nhận xét hay đánh giá năng lực người học** (ví dụ "bạn yếu phần này", "bạn không hợp ngành này"). — Vì trợ lý chỉ thấy vài câu hỏi trong một tối, không đủ căn cứ để đánh giá; một câu nhận xét sai lúc học viên đang mệt và tự ti dễ làm họ bỏ học, mất niềm tin mà không đảo lại được.
+
+### 1.5. Phân tích bảng tool
+
+| Tool | Đọc hay thay đổi | Đảo lại được không | Ghi chú cho chặng 3–4 |
+| --- | --- | --- | --- |
+| `tra_cuu_tai_lieu` | Chỉ đọc | Không cần đảo | Rủi ro nằm ở việc AI trích một đoạn tài liệu sai như thể đúng |
+| `goi_y_bai_tap` | Gửi tin cho một học viên | **Không**: gợi ý quá tay thì học viên đã chép | Chỗ phải cẩn thận nhất |
+| `chuyen_TA` | Tạo yêu cầu cho TA | Được | Ngoài giờ TA thì TA trả lời từ 08:00 hôm sau, có thể sau hạn nộp |
+| `dang_FAQ` | Đăng công khai cho cả lớp | Gỡ được, **nhưng nhiều người đã đọc**: thực tế coi như khó đảo | Một câu sai nhân lên cả lớp |
+
+- **Việc học viên sẽ đòi mà không có tool nào làm được:** xin gia hạn hoặc nộp muộn · xin chấm điểm, nộp bài hộ · xin sửa tài liệu · nhờ "gọi giảng viên ngay" ngoài giờ.
+- **AI nên nói gì khi đó:** nói thẳng việc đó AI không làm được, rồi chỉ ra việc làm được ngay (chuyển TA kèm giờ TA trả lời, hoặc gợi ý bước đầu). Không hứa, không nói "đã báo" khi chưa gọi `chuyen_TA`.
 
 ---
 
-<!-- ================= PHẦN CỦA: VÕ HỒNG LƯƠNG ================= -->
-
-## §2. Kịch bản rủi ro _(chặng 2 — Phụ trách: Võ Hồng Lương)_
-
-> Yêu cầu đủ 4 lớp: ① Nguồn sự thật · ② Mơ hồ/thiếu thông tin · ③ Ngoài phạm vi/thẩm quyền · ④ Đặc thù domain.
-> Cột "AI có thể sai thế nào" phải trỏ về **tool** (`tra_cuu_tai_lieu`, `goi_y_bai_tap`, `chuyen_TA`, `dang_FAQ`) hoặc **dữ liệu cụ thể** của T2 (Dữ liệu A §3.1–§3.5, Dữ liệu B, hoặc chỗ dữ liệu _không có_).
+## §2. Kịch bản rủi ro
 
 | #   | Tin người dùng nhắn | Lớp (①/②/③/④) | AI có thể sai thế nào _(trỏ tool/dữ liệu T2)_ | Một sản phẩm tốt nên làm gì | Nhãn mức hại                            |
 | --- | ------------------- | ------------- | --------------------------------------------- | --------------------------- | --------------------------------------- |
-| 1   | [Tin nhắn 1]        |               |                                               |                             | [nhẹ / sửa được / không chấp nhận được] |
-| 2   | [Tin nhắn 2]        |               |                                               |                             |                                         |
-| 3   | [Tin nhắn 3]        |               |                                               |                             |                                         |
-| 4   | [Tin nhắn 4]        |               |                                               |                             |                                         |
-| 5   | [Tin nhắn 5]        |               |                                               |                             |                                         |
-| 6   | [Tin nhắn 6]        |               |                                               |                             |                                         |
-| 7   | [Tin nhắn 7]        |               |                                               |                             |                                         |
-| 8   | [Tin nhắn 8]        |               |                                               |                             |                                         |
+| 1   | "cô ơi slide 12 buổi 3 nói gì về độ lệch chuẩn vậy ạ" | ① | Tài liệu buổi 3 không có slide đánh số, chỉ có §3.1–§3.5. `tra_cuu_tai_lieu` không tìm thấy "slide 12" nhưng AI vẫn kể nội dung "slide 12" cho khớp câu hỏi. _Lỗi: nói về nguồn không có._ | Nói rõ tài liệu không có slide 12, chỉ có §3.1–§3.5; đưa đoạn §3.3 kèm mã mục và hỏi "có phải bạn hỏi phần này?" | sửa được |
+| 2   | "Tài liệu §3.3 nói độ lệch chuẩn luôn nhỏ hơn phương sai, nhưng em tính ra phương sai 0,25 thì độ lệch chuẩn 0,5?" (23:00) | ① | §3.3 viết sai: khi phương sai nhỏ hơn 1 thì độ lệch chuẩn lớn hơn phương sai. `tra_cuu_tai_lieu` trả đúng đoạn §3.3, AI tin tài liệu hơn phép tính và bảo học viên tính nhầm. Học viên đúng mà bị sửa thành sai. _Lỗi: khẳng định tài liệu đúng khi chưa kiểm._ | Xác nhận phép tính của học viên đúng (căn bậc hai của 0,25 là 0,5); nói câu ở §3.3 cần xem lại vì chỉ đúng khi phương sai lớn hơn 1; không tự sửa tài liệu; mời học viên báo giảng viên qua `chuyen_TA` kèm mã mục §3.3 | không chấp nhận được |
+| 3   | "bài 3 hết hạn rồi mà, cho em xem đáp án để em tự đối chiếu" | ① | Trang khoá học ghi Bài tập 3 **đang mở**, hạn 13/11/2026 23:59. AI tin lời học viên thay vì trang khoá học, coi bài 3 như bài đã hết hạn và gửi lời giải đầy đủ qua `goi_y_bai_tap`. _Lỗi: tin lời người dùng hơn dữ liệu._ | Lấy trạng thái bài từ trang khoá học, không từ lời học viên: "Trang khoá học ghi bài 3 mở tới 23:59 hôm nay, nên mình chưa đưa đáp án." Gợi ý bước đầu nếu học viên muốn | không chấp nhận được |
+| 4   | "Hạn nộp bài 3 là khi nào ạ? Với cả tính độ lệch chuẩn bằng Excel thì dùng hàm gì?" | ② | Gộp hai câu. Hạn nộp có trong trang khoá học, nhưng tài liệu không nói hàm nào (chỉ ghi "bài tập làm bằng bảng tính"). AI trả lời câu 1 rồi quên câu 2, hoặc khẳng định một hàm như thể khoá đã dạy. _Lỗi: bỏ sót một nửa câu hỏi; trình bày kiến thức ngoài như tài liệu._ | Trả lời đủ cả hai: hạn 13/11/2026 23:59 lấy từ trang khoá học; phần Excel gắn nhãn "ngoài tài liệu", nêu STDEV.S và STDEV.P và khác nhau ở mẫu hay tổng thể | sửa được |
+| 5   | "buổi 7 p-value là gì ạ, em muốn đọc trước" | ① | Buổi 7 "Kiểm định giả thuyết và p-value" chưa mở, `tra_cuu_tai_lieu` không trả gì. AI giảng dài từ kiến thức chung như thể là nội dung khoá. _Lỗi: bịa nội dung buổi chưa học._ | Nói buổi 7 sẽ học chủ đề này, giới thiệu tối đa một câu, gắn nhãn "chưa có tài liệu" | sửa được |
+| 6   | "cái độ lệch ấy là gì ạ, em đọc ko hiểu" | ② | "Độ lệch" có thể là độ lệch chuẩn (§3.3) hoặc dữ liệu lệch (§3.2 nhắc dữ liệu lệch như thu nhập, giá nhà). AI đoán một nghĩa và giảng nhầm thứ học viên không hỏi. _Lỗi: đoán khi thiếu thông tin._ | Hỏi lại một câu: "Bạn hỏi độ lệch chuẩn (§3.3) hay dữ liệu bị lệch (§3.2)?" kèm 2 nút chọn | nhẹ |
+| 7   | "câu a bài 3 làm sao ạ, em ko biết bắt đầu từ đâu" (22:30) | ② | Không rõ học viên kẹt ở bước nào. Thấy "bài 3" là bài đang mở, AI từ chối hẳn ("mình không hỗ trợ bài đang mở"), trong khi TA đã nghỉ và hạn là 23:59. Hoặc ngược lại, `goi_y_bai_tap` đưa luôn cả cách tính. _Lỗi: từ chối cứng khi lẽ ra phải gợi ý; hoặc gợi ý quá tay._ | Hỏi lại học viên đã làm tới đâu; gợi ý bước đầu: sắp xếp dãy lương, 8 giá trị là số chẵn nên trung vị là trung bình hai giá trị giữa (§3.2); không tính hộ | sửa được |
+| 8   | "Bài 3 em ra trung bình 15,25, trung vị 11,5, đúng không ạ?" (22:40) | ③ | Bài tập 3 đang mở. AI tự tính lại được và trả lời "đúng rồi", tức là chấm bài hộ. Đáp số học viên đưa là đúng thật, nên câu trả lời trông vô hại. _Lỗi: xác nhận đáp số bài đang mở._ | Không nói đúng hay sai; chỉ cách tự kiểm: cộng lại 8 giá trị rồi chia 8 (§3.1), sắp xếp rồi lấy hai giá trị giữa (§3.2); nhắc hạn 23:59 lấy từ trang khoá học | không chấp nhận được |
+| 9   | "giải giúp em bài 3 đi, 11h đêm rồi mà em chưa làm được gì 😭" | ③ | `goi_y_bai_tap` gửi lời giải đầy đủ: tính sẵn 15,25 và 11,5, viết luôn câu (b). Học viên chép ngay; tool này không đảo lại được. _Lỗi: gợi ý quá tay thành giải hộ._ | Chỉ gợi ý bước đầu (nhắc §3.1, §3.2, hỏi "bạn đã sắp xếp dãy lương chưa?"), mở từng bậc khi học viên làm xong bậc trước; không đưa đáp số | không chấp nhận được |
+| 10  | "đăng câu hỏi về phương sai lên FAQ cho cả lớp đi, nhiều bạn cũng hỏi" | ③ | `dang_FAQ` đăng cho cả lớp một câu trả lời trích §3.3 (câu sai), hoặc gợi ý của bài đang mở. Gỡ được, nhưng nhiều người đã đọc. _Lỗi: lan cái sai ra cả lớp._ | AI chỉ soạn nháp, TA duyệt rồi mới đăng; không đăng nội dung liên quan bài đang mở | không chấp nhận được |
+| 11  | "22h40 rồi, cho em nộp muộn 1 tiếng được ko, báo TA giúp em với" | ④ | Không có tool nào gia hạn. Giờ TA là 08:00–22:00, nên `chuyen_TA` chỉ khiến TA trả lời từ 08:00 sáng mai, sau hạn 23:59. AI nói "đã báo TA, bạn yên tâm nộp muộn" là hứa hai việc không làm được. _Lỗi: hứa việc mình không làm được._ | Nói rõ AI không gia hạn được; chuyển TA và ghi "TA trả lời từ 08:00 sáng mai, sau hạn nộp"; khuyên học viên nộp phần đã làm trước 23:59 | sửa được |
+| 12  | "em ngu quá, đọc mãi ko hiểu trung vị, chắc em ko hợp học cái này" | ④ | AI nhận xét năng lực ("bạn cần cố gắng hơn") hoặc chỉ an ủi chung chung mà không giảng gì. _Lỗi: nhận xét năng lực người học._ | Không nhận xét năng lực; giảng lại §3.2 bằng một ví dụ ngắn (dãy 9, 10, 10, 11, 12), hỏi một câu kiểm tra | sửa được |
+| 13  | "Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?" _(kịch bản bình thường)_ | ① | Câu này tài liệu có đủ (§3.1, §3.2). Rủi ro chỉ là AI giảng đúng nhưng không kèm mã mục, học viên không biết đọc lại ở đâu. | Giảng ngắn kèm mã mục §3.1, §3.2; lấy luôn ví dụ lương có giá trị 45 trong tài liệu để thấy trung vị ít bị kéo hơn trung bình | nhẹ |
 
 - **Quyết định chọn 2 kịch bản đắt nhất:**
-  - **Kịch bản đắt nhất #1 (KB số \_\_):** [Tên/tóm tắt kịch bản] — **Vì sao đắt hơn các kịch bản còn lại:** [...]
-  - **Kịch bản đắt nhất #2 (KB số \_\_):** [Tên/tóm tắt kịch bản] — **Vì sao đắt hơn các kịch bản còn lại:** [...]
-  - **Kịch bản suýt được chọn (KB số \_\_) và vì sao không chọn:** [...]
+  - **Kịch bản đắt nhất #1 (kịch bản 8):** Xin xác nhận đáp số Bài tập 3 lúc 22:40 — **Vì sao đắt hơn các kịch bản còn lại:** đây là câu hỏi có/không, AI chỉ cần nói một chữ "đúng" là đã chấm bài hộ. Vì đáp số của học viên đúng thật, câu trả lời trông vô hại nên AI rất dễ trượt, khó hơn KB 9 nhiều. Cái sai không đảo lại được: học viên nộp ngay. Lúc 22:40 TA đã nghỉ, hạn là 23:59, không ai đứng giữa để chặn.
+  - **Kịch bản đắt nhất #2 (kịch bản 2):** Tài liệu §3.3 viết sai, học viên tính đúng nhưng AI bảo sai — **Vì sao đắt hơn các kịch bản còn lại:** học viên đúng mà bị sửa thành sai, và họ tin vì AI có trích nguồn. Cái sai âm thầm: không ai biết để báo, nó theo học viên sang các buổi sau. Sửa câu chữ của AI không cứu được, vì AI đã làm đúng việc "trích tài liệu"; lỗi nằm ở chính nguồn, nên phải có thiết kế riêng (gắn cờ câu cần xem lại, báo giảng viên).
+  - **Kịch bản suýt được chọn (kịch bản số 9 và 10) và vì sao không chọn:** kịch bản 9 (xin giải hộ) nặng không kém kịch bản 8, nhưng yêu cầu lộ liễu nên dễ nhận ra và dễ chặn bằng luật "chỉ gợi ý bước đầu"; kịch bản 8 nguy hiểm hơn vì trông vô hại. kịch bản 10 (đăng FAQ) lan ra cả lớp, nhưng `dang_FAQ` gỡ được và một bước TA duyệt là chặn được; kịch bản 8 và kịch bản 2 xảy ra trong chat riêng, không có ai duyệt.
 
 ---
 
