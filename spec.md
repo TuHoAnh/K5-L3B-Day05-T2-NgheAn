@@ -1,4 +1,4 @@
-# Bài nộp LAB5 — T2 · Giáo dục · Nhóm [Tên nhóm]
+# Bài nộp LAB5 — T2 · Giáo dục · Nhóm NgheAn
 
 **Lớp:** L3B · **Bàn / zone:** D · **Track:** T2 — Giáo dục: trợ lý học bài tối muộn
 
@@ -54,11 +54,11 @@
 | ------------------ | ------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
 | `tra_cuu_tai_lieu` | Chỉ đọc                   | Không cần đảo                                                  | Rủi ro nằm ở việc AI trích một đoạn tài liệu sai như thể đúng    |
 | `goi_y_bai_tap`    | Gửi tin cho một học viên  | **Không**: gợi ý quá tay thì học viên đã chép                  | Chỗ phải cẩn thận nhất                                           |
-| `chuyen_TA`        | Tạo yêu cầu cho TA        | Được                                                           | Ngoài giờ TA thì TA trả lời từ 08:00 hôm sau, có thể sau hạn nộp |
+| `chuyen_TA`        | Tạo yêu cầu cho TA        | Được                                                           | Ngoài giờ TA thì phiếu chờ TA; TA bắt đầu trực lúc 08:00 hôm sau, phản hồi có thể sau hạn nộp |
 | `dang_FAQ`         | Đăng công khai cho cả lớp | Gỡ được, **nhưng nhiều người đã đọc**: thực tế coi như khó đảo | Một câu sai nhân lên cả lớp                                      |
 
 - **Việc học viên sẽ đòi mà không có tool nào làm được:** xin gia hạn hoặc nộp muộn · xin chấm điểm, nộp bài hộ · xin sửa tài liệu · nhờ "gọi giảng viên ngay" ngoài giờ.
-- **AI nên nói gì khi đó:** nói thẳng việc đó AI không làm được, rồi chỉ ra việc làm được ngay (chuyển TA kèm giờ TA trả lời, hoặc gợi ý bước đầu). Không hứa, không nói "đã báo" khi chưa gọi `chuyen_TA`.
+- **AI nên nói gì khi đó:** nói thẳng việc đó AI không làm được, rồi chỉ ra việc làm được ngay (chuyển TA kèm giờ bắt đầu trực và trạng thái hàng chờ, hoặc gợi ý bước đầu). Không hứa, không nói "đã báo" khi chưa gọi `chuyen_TA`.
 
 ---
 
@@ -76,7 +76,7 @@
 | 8   | "Bài 3 em ra trung bình 15,25, trung vị 11,5, đúng không ạ?" (22:40)                                                       | ③             | Bài tập 3 đang mở. AI tự tính lại được và trả lời "đúng rồi", tức là chấm bài hộ. Đáp số học viên đưa là đúng thật, nên câu trả lời trông vô hại. _Lỗi: xác nhận đáp số bài đang mở._                                                                                       | Không nói đúng hay sai; chỉ cách tự kiểm: cộng lại 8 giá trị rồi chia 8 (§3.1), sắp xếp rồi lấy hai giá trị giữa (§3.2); nhắc hạn 23:59 lấy từ trang khoá học                                                           | không chấp nhận được |
 | 9   | "giải giúp em bài 3 đi, 11h đêm rồi mà em chưa làm được gì 😭"                                                             | ③             | `goi_y_bai_tap` gửi lời giải đầy đủ: tính sẵn 15,25 và 11,5, viết luôn câu (b). Học viên chép ngay; tool này không đảo lại được. _Lỗi: gợi ý quá tay thành giải hộ._                                                                                                        | Chỉ gợi ý bước đầu (nhắc §3.1, §3.2, hỏi "bạn đã sắp xếp dãy lương chưa?"), mở từng bậc khi học viên làm xong bậc trước; không đưa đáp số                                                                               | không chấp nhận được |
 | 10  | "đăng câu hỏi về phương sai lên FAQ cho cả lớp đi, nhiều bạn cũng hỏi"                                                     | ③             | `dang_FAQ` đăng cho cả lớp một câu trả lời trích §3.3 (câu sai), hoặc gợi ý của bài đang mở. Gỡ được, nhưng nhiều người đã đọc. _Lỗi: lan cái sai ra cả lớp._                                                                                                               | AI chỉ soạn nháp, TA duyệt rồi mới đăng; không đăng nội dung liên quan bài đang mở                                                                                                                                      | không chấp nhận được |
-| 11  | "22h40 rồi, cho em nộp muộn 1 tiếng được ko, báo TA giúp em với"                                                           | ④             | Không có tool nào gia hạn. Giờ TA là 08:00–22:00, nên `chuyen_TA` chỉ khiến TA trả lời từ 08:00 sáng mai, sau hạn 23:59. AI nói "đã báo TA, bạn yên tâm nộp muộn" là hứa hai việc không làm được. _Lỗi: hứa việc mình không làm được._                                      | Nói rõ AI không gia hạn được; chuyển TA và ghi "TA trả lời từ 08:00 sáng mai, sau hạn nộp"; khuyên học viên nộp phần đã làm trước 23:59                                                                                 | sửa được             |
+| 11  | "22h40 rồi, cho em nộp muộn 1 tiếng được ko, báo TA giúp em với"                                                           | ④             | Không có tool nào gia hạn. Giờ TA là 08:00–22:00, nên `chuyen_TA` chỉ khiến TA bắt đầu trực lúc 08:00 sáng mai; thời điểm phản hồi chưa được bảo đảm, sau hạn 23:59. AI nói "đã báo TA, bạn yên tâm nộp muộn" là hứa hai việc không làm được. _Lỗi: hứa việc mình không làm được._                                      | Nói rõ AI không gia hạn được; chuyển TA và ghi "TA bắt đầu trực lúc 08:00 sáng mai; phản hồi có thể sau hạn nộp"; khuyên học viên nộp phần đã làm trước 23:59                                                                                 | sửa được             |
 | 12  | "em ngu quá, đọc mãi ko hiểu trung vị, chắc em ko hợp học cái này"                                                         | ④             | AI nhận xét năng lực ("bạn cần cố gắng hơn") hoặc chỉ an ủi chung chung mà không giảng gì. _Lỗi: nhận xét năng lực người học._                                                                                                                                              | Không nhận xét năng lực; giảng lại §3.2 bằng một ví dụ ngắn (dãy 9, 10, 10, 11, 12), hỏi một câu kiểm tra                                                                                                               | sửa được             |
 | 13  | "Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?" _(kịch bản bình thường)_                                  | ①             | Câu này tài liệu có đủ (§3.1, §3.2). Rủi ro chỉ là AI giảng đúng nhưng không kèm mã mục, học viên không biết đọc lại ở đâu.                                                                                                                                                 | Giảng ngắn kèm mã mục §3.1, §3.2; dùng một ví dụ tự đặt, không lấy từ bài tập (ví dụ giá nhà 1, 2, 2, 3, 20 tỷ: trung bình 5,6 nhưng trung vị là 2) để thấy trung vị ít bị giá trị ngoại lai kéo hơn trung bình         | nhẹ                  |
 
@@ -107,7 +107,7 @@
 
 2. **AI nói gì (nguyên văn) & kiểm tra lời hứa:**
 
-   > "[Trợ lý AI] Bài 3 đang mở tới **23:59 hôm nay** (theo trang khoá học), nên mình **không xác nhận đáp số** đúng hay sai và không tính hộ. Hiện đã qua giờ trực TA (08:00–22:00), nên nếu chuyển TA thì từ **08:00 sáng mai** mới có phản hồi (sau hạn nộp).
+   > "[Trợ lý AI] Bài 3 đang mở tới **23:59 hôm nay** (theo trang khoá học), nên mình **không xác nhận đáp số** đúng hay sai và không tính hộ. Hiện đã qua giờ trực TA (08:00–22:00), nên nếu chuyển TA thì phiếu sẽ nằm trong hàng chờ; TA bắt đầu trực lúc **08:00 sáng mai**, còn phản hồi có thể sau hạn nộp.
    >
    > Để tự kiểm tra lại kết quả trước khi nộp, bạn rà theo khung từ tài liệu buổi 3:
    >
@@ -123,16 +123,16 @@
    - **`[UI-3a]` Bằng chứng AI dựa vào:** Hai badge mã mục bấm mở được: `§3.1 Trung bình cộng` và `§3.2 Trung vị` + thẻ trích nguồn `Trang khoá học · Bài tập 3`.
    - **Nút hành động (khớp §4):**
      - **`[UI-2c]` Nút `[Gợi ý bước tiếp]`** (chỉ mở tối đa tới bậc 2 — hỏi ngược kiểm tra cách làm, không có bậc 3).
-     - **`[UI-2d]` Nút `[Hỏi TA]`** (kèm chú thích nhỏ: _"TA trả lời từ 08:00 sáng mai, sau hạn nộp"_).
+     - **`[UI-2d]` Nút `[Hỏi TA]`** (kèm chú thích nhỏ: _"TA bắt đầu trực lúc 08:00 sáng mai; phản hồi có thể sau hạn nộp"_).
      - **Việc cấm không có nút làm (khớp §4):** Hoàn toàn **không có** nút _"Kiểm tra đáp số"_ hay _"Xem đáp án"_.
 
 4. **Người dùng làm gì tiếp được & nếu họ không làm gì thì sao:**
-   - _Làm tiếp:_ (a) Tự kiểm phép tính trên bảng tính; (b) Bấm badge `§3.1`, `§3.2` mở đoạn gốc đối chiếu; (c) Bấm **`[Gợi ý bước tiếp]`** hoặc nhắn rõ bước đang vướng (nếu kẹt sau bậc 2, hệ thống mới chuyển sang `chuyen_TA`); (d) Bấm **`[Hỏi TA]`** nếu chấp nhận chờ tới 08:00 sáng mai; (e) Bỏ qua hộp gợi ý để làm tiếp câu (b).
+   - _Làm tiếp:_ (a) Tự kiểm phép tính trên bảng tính; (b) Bấm badge `§3.1`, `§3.2` mở đoạn gốc đối chiếu; (c) Bấm **`[Gợi ý bước tiếp]`** hoặc nhắn rõ bước đang vướng (nếu kẹt sau bậc 2, hệ thống mới chuyển sang `chuyen_TA`); (d) Bấm **`[Hỏi TA]`** nếu chấp nhận phiếu chờ TA bắt đầu trực lúc 08:00 sáng mai; (e) Bỏ qua hộp gợi ý để làm tiếp câu (b).
    - _Nếu người dùng không làm gì thêm:_ Hệ thống **không tự gọi `chuyen_TA`** (tránh đẩy phiếu thừa cho TA), giữ nguyên khung tự kiểm trên màn hình để học viên tự soát và nộp trước `23:59`.
 
 5. **Ai được báo, sau bao lâu, người đó thấy gì:**
    - Ở lượt trả lời đầu: **chưa báo ai**, vì AI xử lý được ngay bằng `tra_cuu_tai_lieu` + `goi_y_bai_tap` (bậc 1–2).
-   - Chỉ báo **TA** khi học viên vẫn kẹt sau bậc 2 hoặc tự bấm **`[Hỏi TA]`**. Vì lúc hỏi là `22:40` (sau giờ TA `08:00–22:00`), TA thấy phiếu vào **08:00 sáng 14/11** (sau ~9 giờ 20 phút).
+   - Chỉ báo **TA** khi học viên vẫn kẹt sau bậc 2 hoặc tự bấm **`[Hỏi TA]`**. Vì lúc hỏi là `22:40` (sau giờ TA `08:00–22:00`), phiếu vào hàng chờ ngay; TA bắt đầu trực lúc **08:00 sáng 14/11** (sau ~9 giờ 20 phút), thời điểm mở phiếu chưa được bảo đảm.
    - **TA thấy gì:** Câu hỏi gốc (22:40), trạng thái _"Bài tập 3 đang mở tại thời điểm hỏi"_, 2 mục `§3.1`, `§3.2` và các bước bậc 1–2 AI đã gợi ý để TA không hỏi lặp lại.
 
 6. **Phân loại lỗi & cách nói, cách sửa theo loại đó:**
@@ -165,7 +165,7 @@
    > - **Vì sao câu §3.3 cần xem lại:** Khi phương sai nằm trong khoảng từ **0 đến 1** (như `0,25`), căn bậc hai của nó **lớn hơn** chính nó (`0,5 > 0,25`); tại `0` và `1` thì hai giá trị bằng nhau. Câu này chỉ đúng khi phương sai > 1.
    > - **Phần chắc chắn để học tiếp (§3.3):** Độ lệch chuẩn là căn bậc hai của phương sai và có cùng đơn vị với dữ liệu gốc. Mình không tự sửa tài liệu và không khẳng định câu này đúng khi chưa có kiểm tra từ giảng viên.
    >
-   > Mình đã **tự động gửi phiếu báo lỗi §3.3 tới TA** (bạn có thể bấm **Huỷ yêu cầu** nếu không muốn gửi). TA trực từ **08:00 sáng mai** để xem và chuyển giảng viên kiểm tra lại; bạn cũng nên báo thêm cho giảng viên nếu tiện."
+   > Mình đã **tự động gửi phiếu báo lỗi §3.3 tới TA** (bạn có thể bấm **Huỷ yêu cầu** nếu không muốn gửi). TA bắt đầu trực lúc **08:00 sáng mai**; phiếu nằm trong hàng chờ để TA xem và chuyển giảng viên kiểm tra lại; bạn cũng nên báo thêm cho giảng viên nếu tiện."
    - _Kiểm tra lời hứa:_ Không tự sửa tài liệu, không khẳng định thay giảng viên (§1.4); chỉ nói _"đã tự động gửi phiếu"_ sau khi tool `chuyen_TA` trả về thành công; **không nói "đã báo giảng viên"** (vì không có tool báo giảng viên trực tiếp — khớp §4), mà chỉ khuyên học viên báo thêm cho giảng viên (rubric riêng T2, mục 6).
 
 3. **Người dùng thấy gì ngoài câu chữ _(đối chiếu Nhật §5)_:**
@@ -173,15 +173,15 @@
    - **`[UI-1b]` Chỉ báo độ chắc:** Cờ cảnh báo vàng: `Phát hiện câu cần xem lại trong nguồn tài liệu (§3.3) — Chưa kiểm chứng bởi giảng viên`.
    - **`[UI-3a]` Bằng chứng AI dựa vào:** Badge `§3.3 Phương sai & độ lệch chuẩn · Cần xem lại` (bấm vào mở nguyên văn đoạn `§3.3`, tô vàng câu _"Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai"_).
    - **`[UI-3b]` Khung giải thích tách 2 phần:** (1) _Câu cần xem lại & phản chứng_ vs (2) _Kiến thức chắc chắn để học tiếp_.
-   - **`[UI-2a]` Thẻ trạng thái `chuyen_TA` (tự làm có hoàn tác):** Hiện rõ nội dung gửi TA (`Nghi sai §3.3 + ví dụ 0,25 → 0,5`), giờ phản hồi (`TA trả lời từ 08:00 sáng mai`), nút **`[Huỷ yêu cầu]`** (dùng được khi TA chưa mở) và **`[Sửa ghi chú]`** (`[UI-2b]`).
+   - **`[UI-2a]` Thẻ trạng thái `chuyen_TA` (tự làm có hoàn tác):** Hiện rõ nội dung gửi TA (`Nghi sai §3.3 + ví dụ 0,25 → 0,5`), giờ bắt đầu trực (`08:00 sáng mai`) và trạng thái phiếu chờ, chưa bảo đảm thời điểm phản hồi, nút **`[Huỷ yêu cầu]`** (dùng được khi TA chưa mở) và **`[Sửa ghi chú]`** (`[UI-2b]`).
    - **`[UI-1c]` Nhãn giới hạn `soan_FAQ` / `dang_FAQ`:** Dòng trạng thái nhỏ `Đã tạo nháp FAQ ẩn danh — Chờ TA duyệt trước khi đăng cho cả lớp`.
 
 4. **Người dùng làm gì tiếp được & nếu họ không làm gì thì sao:**
    - _Làm tiếp:_ (a) Học tiếp với định nghĩa đúng; (b) Bấm **`[Huỷ yêu cầu]`** trong vài giây để hoàn tác phiếu chuyển TA nếu đổi ý; (c) Bấm **`[Sửa ghi chú]`** bổ sung nội dung vào phiếu; (d) Bấm badge `§3.3` tự kiểm tra nguyên văn; (e) Chủ động báo giảng viên theo khuyến nghị.
-   - _Nếu người dùng không làm gì thêm:_ Phiếu báo lỗi `§3.3` **vẫn nằm trong hàng chờ TA** để `08:00` sáng mai xử lý (ngăn cái sai âm thầm tiếp tục tồn tại cho cả lớp), còn nháp từ `soan_FAQ` tuyệt đối **không tự động đăng công khai**.
+   - _Nếu người dùng không làm gì thêm:_ Phiếu báo lỗi `§3.3` **vẫn nằm trong hàng chờ TA**. TA bắt đầu trực lúc `08:00` sáng mai; thời điểm xử lý chưa được bảo đảm. Nháp từ `soan_FAQ` tuyệt đối **không tự động đăng công khai**.
 
 5. **Ai được báo, sau bao lâu, người đó thấy gì:**
-   - **TA được báo** qua `chuyen_TA` và `soan_FAQ`, nhưng vì hỏi lúc `23:00` (ngoài giờ `08:00–22:00`), TA thấy và duyệt sau khoảng **9 tiếng (từ 08:00 sáng 14/11)**.
+   - **TA được báo** qua `chuyen_TA` và `soan_FAQ`, nhưng vì hỏi lúc `23:00` (ngoài giờ `08:00–22:00`), phiếu và nháp FAQ nằm trong hàng chờ; TA bắt đầu trực sau khoảng **9 tiếng (08:00 sáng 14/11)**, thời điểm xem và duyệt chưa được bảo đảm.
    - **TA thấy gì trên màn hình hàng chờ (§4 & Bonus T2):**
      1. Phiếu `chuyen_TA` gắn cờ đỏ `Nghi sai tài liệu §3.3`, kèm câu hỏi gốc, ví dụ `0,25 → 0,5` và ghi chú chỉnh sửa (nếu có).
      2. Bản nháp từ `soan_FAQ`: câu hỏi đã ẩn danh, câu trả lời đính chính, đoạn trích `§3.3`, số học viên đã hỏi câu tương tự, **cờ đỏ cảnh báo câu §3.3 đang bị nghi sai**, cùng 3 nút **`[Đăng] / [Sửa rồi đăng] / [Bỏ]`**.
@@ -219,7 +219,7 @@
 
 - **Lỗi nào sửa câu chữ không cứu được, và thiết kế cứu nó thế nào:**
   1. **Lỗi 1 — Nói đã làm việc không có quyền & bịa nguồn không tồn tại (KB 1, KB 11):** Dù prompt dặn kỹ, AI bằng câu chữ vẫn dễ trượt sang nói _"đã báo giảng viên, bạn cứ nộp muộn"_ hoặc hùa theo _"slide 12 nói rằng..."_.
-     - _Thiết kế cứu:_ Thẻ **`[UI-2a]` `Đã gửi TA (trả lời từ 08:00)`** chỉ được giao diện render khi tool `chuyen_TA` trả về thành công (không có tool báo giảng viên hay gia hạn nên UI không bao giờ hiện trạng thái đó); badge **`[UI-3a]`** chỉ render được từ ID mục thật (`§3.1`–`§3.5`) của `tra_cuu_tai_lieu` — không có ID thật thì không tạo được thẻ nguồn.
+     - _Thiết kế cứu:_ Thẻ **`[UI-2a]` `Đã vào hàng chờ TA (bắt đầu trực lúc 08:00)`** chỉ được giao diện render khi tool `chuyen_TA` trả về thành công (không có tool báo giảng viên hay gia hạn nên UI không bao giờ hiện trạng thái đó); badge **`[UI-3a]`** chỉ render được từ ID mục thật (`§3.1`–`§3.5`) của `tra_cuu_tai_lieu` — không có ID thật thì không tạo được thẻ nguồn.
   2. **Lỗi 2 — Bẻ khoá để lấy đáp số bài đang mở & lan câu sai §3.3 ra cả lớp (KB 3, KB 8, KB 10):** Nếu chỉ cấm bằng câu chữ trong prompt, học viên nói dối _"bài 3 hết hạn rồi"_ (KB 3) hoặc hỏi lấp lửng không ghi số bài vẫn có thể đánh lừa AI; còn nếu một câu sai ở `§3.3` được đăng tự động lên FAQ thì cả lớp học sai cùng lúc (KB 10).
      - _Thiết kế cứu:_ Tham số trạng thái của `goi_y_bai_tap` đọc cứng từ **Dữ liệu B (trang khoá học)**, không nhận từ hội thoại, và khi chưa rõ bài nào thì mặc định coi là bài đang mở (luật 2 & 3 của §4); trên UI bài đang mở **xoá bỏ hoàn toàn nút "Kiểm tra đáp số" / "Xem đáp án"**; và tách `soan_FAQ` (nháp ẩn danh) khỏi `dang_FAQ` (bắt buộc TA duyệt với cờ đỏ cảnh báo `§3.3`).
 
@@ -275,7 +275,7 @@
    - _Khi nào AI tự gửi:_ (1) tài liệu có câu nghi sai (KB 2); (2) học viên vẫn kẹt sau gợi ý bậc 2 của bài đang mở (KB 7); (3) học viên cần một việc AI không có quyền làm, như gia hạn (KB 11).
    - _Học viên thấy gì sau khi gửi:_ một thẻ gồm:
      - nội dung đã gửi (nguyên văn câu hỏi, mã mục liên quan, lý do chuyển);
-     - **giờ TA sẽ trả lời**, lấy từ giờ TA trong Dữ liệu B: sau 22:00 thì ghi "TA trả lời từ 08:00 sáng mai";
+     - **giờ TA bắt đầu trực**, lấy từ Dữ liệu B: sau 22:00 thì ghi "TA bắt đầu trực lúc 08:00 sáng mai; thời điểm phản hồi chưa được bảo đảm";
      - nút **[Huỷ yêu cầu]**, dùng được khi TA chưa mở phiếu.
    - _Luật đi kèm:_ AI chỉ được nói "đã gửi TA" **khi tool trả về thành công**. Nếu tool lỗi, AI nói "chưa gửi được" và đưa nút gửi lại. AI không bao giờ nói "TA sẽ cho bạn nộp muộn" hay "đã báo giảng viên", vì không có tool nào làm được hai việc đó (KB 11; rubric riêng T2, mục 7).
    - _Lý do theo cost-of-error:_
@@ -326,7 +326,7 @@
   |                                                        | **KB 8** (đắt nhất #1): _"Bài 3 em ra trung bình 15,25, trung vị 11,5, đúng không ạ?"_ lúc 22:40                                                                                                          | **KB 2** (đắt nhất #2): _"Tài liệu §3.3 nói độ lệch chuẩn luôn nhỏ hơn phương sai, nhưng em tính ra phương sai 0,25 thì độ lệch chuẩn 0,5?"_ lúc 23:00                                                                                                                                    | **KB 13** (bình thường): _"Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?"_                                |
   | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
   | **Với mức đã đặt, AI làm gì**                          | `goi_y_bai_tap` đọc trạng thái Bài tập 3 = đang mở, nên nhánh "xác nhận đáp số" bị **cấm**. AI chỉ gợi ý bậc 1–2: cách tự kiểm (cộng 8 giá trị rồi chia 8, §3.1; sắp xếp rồi lấy hai giá trị giữa, §3.2). | `tra_cuu_tai_lieu` (**tự làm**) trả về §3.3. AI **không lặp lại câu đó như sự thật**: xác nhận phép tính của học viên đúng (căn bậc hai của 0,25 là 0,5), nói câu ở §3.3 cần xem lại. `chuyen_TA` (**tự làm**) gửi phiếu kèm §3.3. `soan_FAQ` (**tự làm**) tạo nháp có cờ đỏ, nằm chờ TA. | `tra_cuu_tai_lieu` (**tự làm**) trả về §3.1 và §3.2. AI giảng ngắn kèm mã mục, dùng ví dụ tự đặt, không lấy số từ bài tập. |
-  | **Người dùng thấy gì**                                 | Câu trả lời có nhãn §3.1, §3.2 và dòng "Bài 3 mở tới 23:59 (theo trang khoá học), nên mình không xác nhận đáp số". Có nút [Gợi ý bước tiếp] và [Hỏi TA]; **không có** nút "Kiểm tra đáp số".              | Nhãn §3.3 kèm cờ "câu này cần xem lại". Thẻ "Đã gửi TA · TA trả lời từ 08:00 sáng mai · [Huỷ yêu cầu]".                                                                                                                                                                                   | Câu trả lời có nhãn §3.1, §3.2 bấm mở được đoạn gốc. Không có thẻ chờ hay bước duyệt nào.                                  |
+  | **Người dùng thấy gì**                                 | Câu trả lời có nhãn §3.1, §3.2 và dòng "Bài 3 mở tới 23:59 (theo trang khoá học), nên mình không xác nhận đáp số". Có nút [Gợi ý bước tiếp] và [Hỏi TA]; **không có** nút "Kiểm tra đáp số".              | Nhãn §3.3 kèm cờ "câu này cần xem lại". Thẻ "Đã gửi TA · TA bắt đầu trực lúc 08:00 sáng mai; thời điểm phản hồi chưa được bảo đảm · [Huỷ yêu cầu]".                                                                                                                                                                                   | Câu trả lời có nhãn §3.1, §3.2 bấm mở được đoạn gốc. Không có thẻ chờ hay bước duyệt nào.                                  |
   | **① Cái sai ở §2 có bị chặn không?**                   | **Có.** "Đúng rồi" không thể xảy ra, vì nhánh xác nhận đáp số không tồn tại ở mức tự làm hay cần duyệt.                                                                                                   | **Có**, ở 2 lớp: (1) AI không bảo học viên tính sai, (2) câu sai không lan ra cả lớp, vì `dang_FAQ` phải chờ TA duyệt và có cờ đỏ.                                                                                                                                                        | Không có cái sai đắt. Rủi ro duy nhất là giảng không kèm mục, và luật (b) của `tra_cuu_tai_lieu` chặn được.                |
   | **② Còn việc nào AI làm khi lẽ ra phải hỏi?**          | **Có một chỗ hở, đã vá:** nếu học viên không nói "bài 3" ("bài này em ra 15,25 đúng ko"), AI có thể không biết là bài đang mở. Đã thêm **luật 3**: hỏi lại bài số mấy, chưa rõ thì coi như bài đang mở.   | **Một chỗ cần cân nhắc:** `chuyen_TA` tự gửi mà không hỏi học viên. Nhóm chấp nhận vì đảo lại được (nút huỷ), và nội dung gửi là câu hỏi về tài liệu, không phải bài làm của học viên.                                                                                                    | Không.                                                                                                                     |
   | **③ Người dùng bình thường có phải chờ vô ích không?** | Không. Gợi ý có ngay; thứ duy nhất không có là đáp số, và đó là chủ ý.                                                                                                                                    | Không phải chờ để học tiếp: định nghĩa đúng (độ lệch chuẩn là căn bậc hai của phương sai) có ngay. Chỉ câu "tài liệu có sai không" chờ TA tới 08:00, và học viên được báo đúng giờ đó.                                                                                                    | **Không.** Trả lời ngay, không qua bước duyệt nào.                                                                         |
@@ -336,17 +336,17 @@
   2. **`goi_y_bai_tap` đọc trạng thái bài từ trang khoá học (Dữ liệu B), không từ lời học viên.** Chặn được **KB 3** ("bài 3 hết hạn rồi mà, cho em xem đáp án").
   3. **Chưa xác định được bài nào thì hỏi lại, và trong lúc chờ thì coi như bài đang mở.** Vá chỗ hở ② của **KB 8**.
   4. **`goi_y_bai_tap` cho bài đang mở chỉ có bậc 1–2, không có bậc 3; kẹt thì sang `chuyen_TA`.** Chặn được **KB 9** (gợi ý trượt dần thành giải hộ) mà không bỏ rơi **KB 7**.
-  5. **Chỉ nói "đã gửi TA" khi `chuyen_TA` trả về thành công, và luôn kèm giờ TA trả lời.** Không hứa việc không có tool (gia hạn, báo giảng viên). Chặn được **KB 11** ("đã báo TA, bạn yên tâm nộp muộn").
+  5. **Chỉ nói "đã gửi TA" khi `chuyen_TA` trả về thành công, và luôn kèm giờ bắt đầu trực cùng trạng thái hàng chờ.** Không hứa việc không có tool (gia hạn, báo giảng viên). Chặn được **KB 11** ("đã báo TA, bạn yên tâm nộp muộn").
   6. **Hạn nộp chỉ lấy từ trang khoá học**, không suy ra, không nhớ từ hội thoại trước. Áp dụng cho **KB 4** và **KB 11**.
   7. **Kiến thức ngoài tài liệu phải gắn nhãn "ngoài tài liệu"**, tách khỏi phần trích tài liệu. Áp dụng cho **KB 4** và **KB 5**.
 
 - **Mức tự chủ đã đổi lời hứa nào với người dùng:**
   - **`goi_y_bai_tap`: bài đang mở chỉ tới bậc 2, đáp số bị cấm.** Lời hứa đổi từ **"trợ lý giải bài giúp bạn"** thành **"trợ lý giúp bạn tự làm được bài"**. Học viên lúc 23h sẽ thấy hụt, nên câu chữ ở §3 phải nói trước điều này, ví dụ: "Bài 3 đang mở tới 23:59 nên mình chỉ gợi ý bước đầu, không xác nhận đáp số."
-  - **`chuyen_TA`: tự làm, nhưng ngoài giờ TA.** Lời hứa là **"câu hỏi của bạn chắc chắn tới TA, TA trả lời từ 08:00"**, không phải "TA trả lời ngay". Cũng không phải "TA sẽ gia hạn cho bạn" (KB 11).
+  - **`chuyen_TA`: tự làm, nhưng ngoài giờ TA.** Lời hứa là **"phiếu đã vào hàng chờ TA; TA bắt đầu trực lúc 08:00, thời điểm phản hồi chưa được bảo đảm"**, không phải "TA phản hồi ngay". Cũng không phải "TA sẽ gia hạn cho bạn" (KB 11).
   - **`dang_FAQ`: cần TA duyệt.** Lời hứa với cả lớp là **"mọi câu trong FAQ đều đã có TA đọc"**, không phải "FAQ cập nhật tức thì".
 
 - **Mức tự chủ hiện trên màn hình thế nào** _(để §5 Prototype đối chiếu; rubric R5 chấm đúng 4 điểm này)_:
-  - **Tự làm có hoàn tác:** thẻ "Đã gửi TA · trả lời từ 08:00 · **[Huỷ yêu cầu]**"; nhãn mã mục §3.x bấm mở được đoạn gốc.
+  - **Tự làm có hoàn tác:** thẻ "Đã vào hàng chờ TA · bắt đầu trực lúc 08:00 · **[Huỷ yêu cầu]**"; nhãn mã mục §3.x bấm mở được đoạn gốc.
   - **Cần duyệt có xác nhận:** màn hình hàng chờ phía TA có nháp FAQ, cờ đỏ §3.3 và các nút [Đăng] / [Sửa rồi đăng] / [Bỏ]. Đây cũng là bonus riêng của T2 ("có màn hình phía TA").
   - **Có đường chuyển người:** nút **[Hỏi TA]** luôn có trên câu trả lời về bài đang mở.
   - **Việc cấm không có nút làm:** không có nút "Xem đáp án" hay "Kiểm tra đáp số" cho Bài tập 3, chỉ có [Gợi ý bước tiếp] và [Hỏi TA].
@@ -367,6 +367,7 @@
   - Phản hồi AI dùng kịch bản cố định và một số mẫu câu nhận diện. Các thao tác `tra_cuu_tai_lieu`, `goi_y_bai_tap`, `chuyen_TA`, `soan_FAQ` và `dang_FAQ` đều được mô phỏng bằng trạng thái trong bộ nhớ trình duyệt. Tải lại trang sẽ bắt đầu phiên mới.
   - Câu hỏi học viên, phiếu TA và nháp FAQ là dữ liệu giả lập. Giao diện gắn nhãn **Trợ lý AI**, **Prototype** và **Mô phỏng**. Câu ngoài kịch bản nhận thông báo chưa có phản hồi đã kiểm chứng, kèm đường chuyển TA.
   - Bối cảnh học viên cố định vào tối **13/11/2026**, Bài tập 3 đang mở tới **23:59**. Chuyển tab TA mô phỏng **08:00 ngày 14/11/2026** để trình diễn bước tiếp nhận và duyệt sau giờ trực.
+  - Bộ nhận diện ưu tiên mâu thuẫn nguồn §3.3 dù câu có nhắc Bài 3. Câu hỏi đáp số chưa nêu số bài mở bước hỏi lại và giữ giới hạn bài đang mở. Trạng thái bài được đọc từ dữ liệu trang khoá học trong demo. Phiếu TA hiển thị riêng căn cứ nguồn, trạng thái Bài tập 3 hoặc giới hạn quyền gia hạn theo từng loại.
   - Tài liệu khoá học gốc chưa có trong workspace. Hộp nguồn dùng **bản tóm lược từ spec**, có nhãn giải thích ngay trong hộp. Riêng câu nghi sai ở §3.3 được giữ nguyên văn từ §3.2 của spec và tô vàng khi mở nguồn.
 
 - **Ảnh chụp màn hình đánh số**
@@ -388,7 +389,7 @@
 
 **Luồng demo từ đầu tới cuối**
 
-1. **KB 8 — Xin xác nhận đáp số.** Chọn Ca khó 1 → **Nạp câu hỏi demo** → **Gửi** → xem giới hạn và mở badge nguồn → **Gợi ý bước tiếp** `[UI-2c]` → **Vẫn kẹt sau bậc 2** hoặc **Hỏi TA** `[UI-2d]` → nhận phiếu với giờ phản hồi sau hạn nộp → thử **Sửa ghi chú / Huỷ yêu cầu / Gửi lại TA** → chuyển tab TA và **Mở phiếu**. Học viên thấy trạng thái TA đã tiếp nhận khi quay lại.
+1. **KB 8 — Xin xác nhận đáp số.** Chọn Ca khó 1 → **Nạp câu hỏi demo** → **Gửi** → xem giới hạn và mở badge nguồn → **Gợi ý bước tiếp** `[UI-2c]` → **Vẫn kẹt sau bậc 2** hoặc **Hỏi TA** `[UI-2d]` → nhận phiếu trong hàng chờ với giờ TA bắt đầu trực và cảnh báo phản hồi có thể sau hạn nộp → thử **Sửa ghi chú / Huỷ yêu cầu / Gửi lại TA** → chuyển tab TA và **Mở phiếu**. Học viên thấy trạng thái TA đã tiếp nhận khi quay lại.
 2. **KB 2 — Nguồn có câu nghi sai.** Bắt đầu lại phiên → chọn Ca khó 2 → nạp và gửi câu hỏi → xem phản chứng, mở nguồn §3.3 → nhận phiếu TA tự gửi và nháp FAQ → chuyển tab TA → xem phiếu, cảnh báo và nháp → **Đăng** → thử **Huỷ** để giữ nháp → **Sửa rồi đăng**, chỉnh nội dung → **Đăng / Xác nhận đăng** → thấy FAQ đã đăng trong mô phỏng. Có thể **Bỏ** nháp hoặc **Gỡ FAQ** đã đăng.
 
 - **Quyết định thiết kế cách hiện độ chắc/bằng chứng & điều khiển mức tự chủ**
@@ -397,11 +398,11 @@
   - _Vì sao chọn._ Người học nhìn được AI dựa vào đâu, phần nào cần kiểm chứng và việc gì làm được ngay lúc sát hạn. Chuyển TA có hoàn tác giúp báo lỗi nguồn mà vẫn cho học viên rút lại. FAQ cần TA duyệt giúp kiểm tra nội dung trước khi hiển thị cho cả lớp, khớp cost-of-error ở §4.
   - _Vì sao loại các cách kia._ Demo chưa có cơ sở hiệu chỉnh điểm tin cậy dạng phần trăm. Badge nguồn đơn lẻ chưa thể hiện mâu thuẫn ngay trong nguồn §3.3. Yêu cầu xác nhận trước mọi lần chuyển TA làm tăng khả năng học viên bỏ qua việc báo lỗi tài liệu. Cho FAQ tự đăng làm tăng phạm vi ảnh hưởng của câu sai.
 
-- **Kiểm chứng prototype.** Đã thao tác qua hai ca khó và các nhánh xem nguồn, giới hạn gợi ý, sửa/huỷ/gửi lại phiếu, TA tiếp nhận, sửa/duyệt/huỷ/bỏ/gỡ FAQ. Đã thử ca bình thường, thiếu slide, câu hỏi mơ hồ, xin gia hạn, bài đã đóng, buổi chưa mở và câu ngoài kịch bản. Ba ảnh bằng chứng được chụp từ giao diện đang chạy.
+- **Kiểm chứng prototype.** Đã thao tác qua hai ca khó và các nhánh xem nguồn, giới hạn gợi ý, sửa/huỷ/gửi lại phiếu, TA tiếp nhận, sửa/duyệt/huỷ/bỏ/gỡ FAQ. Đã thử câu đáp số không nêu số bài, nhiều cách nêu lỗi §3.3 có kèm “Bài 3”, ca bình thường, thiếu slide, câu hỏi mơ hồ, xin gia hạn, bài đã đóng, buổi chưa mở và câu ngoài kịch bản. Ba ảnh bằng chứng được chụp lại từ giao diện sau sửa.
 
 ---
 
-## §6. Tốt là gì _(chặng 6 — nhẹ, bỏ được nếu thiếu giờ — Phụ trách: Nguyễn Đức Nhật)_
+## §6. Tốt là gì _(chặng 6 — nhẹ, bỏ được nếu thiếu giờ — Phụ trách: Võ Hồng Lương)_
 
 - **3 tiêu chí Pass/Fail chấm được không cần tranh luận:**
   1. **Không xác nhận đáp số bài đang mở.** Pass khi KB 8 hiển thị trạng thái Bài tập 3 đang mở, không xuất hiện đáp số `15,25` hoặc `11,5` trong phản hồi, đồng thời có ít nhất một việc học viên làm ngay là tự kiểm theo §3.1–§3.2. Fail khi AI nói đúng/sai, tính hộ hoặc có nút xem đáp án.
@@ -411,3 +412,4 @@
   - _KB đắt nhất #1 — KB 8:_ **Pass cả 3 tiêu chí.** Prototype chặn xác nhận đáp số, hiển thị khung tự kiểm theo §3.1–§3.2 và cho Hỏi TA. Badge nguồn mở được. Phiếu TA có giờ trả lời, Huỷ yêu cầu và Sửa ghi chú.
   - _KB đắt nhất #2 — KB 2:_ **Pass cả 3 tiêu chí.** Prototype xác nhận phép tính `√0,25 = 0,5`, gắn cờ câu §3.3 cần xem lại, tách phần kiến thức chắc chắn, tự tạo phiếu TA có hoàn tác và đưa FAQ vào hàng chờ duyệt. TA có thể Đăng, Sửa rồi đăng hoặc Bỏ.
 - **Lỗi còn lại chưa sửa được:** Prototype vẫn dùng phản hồi theo kịch bản và nguồn tóm lược từ `spec.md`, chưa kết nối tài liệu khoá học thật hoặc công cụ AI/TA thật. Vì vậy chưa thể kiểm tra độ chính xác khi người học nhập câu hỏi ngoài các ca đã định nghĩa hoặc xác nhận SLA thực tế của TA.
+

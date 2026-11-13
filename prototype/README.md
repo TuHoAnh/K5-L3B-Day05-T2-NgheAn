@@ -8,11 +8,13 @@ Mở [index.html](index.html) bằng Chrome, Edge hoặc Firefox. Prototype gồ
 
 1. Giữ lựa chọn “Ca khó 1”, bấm **Nạp câu hỏi demo** rồi **Gửi**.
 2. Đọc trạng thái Bài tập 3 đang mở, hạn 23:59 và giới hạn gợi ý. Bấm badge **§3.1** hoặc **§3.2** để xem căn cứ.
-3. Bấm **Gợi ý bước tiếp** để mở phương pháp bậc 2. Bấm **Vẫn kẹt sau bậc 2** hoặc **Hỏi TA** để tạo phiếu. TA tiếp nhận từ 08:00 ngày 14/11, sau hạn nộp.
+3. Bấm **Gợi ý bước tiếp** để mở phương pháp bậc 2. Bấm **Vẫn kẹt sau bậc 2** hoặc **Hỏi TA** để tạo phiếu trong hàng chờ. TA bắt đầu trực lúc 08:00 ngày 14/11; thời điểm phản hồi chưa được bảo đảm và có thể sau hạn nộp.
 4. Bấm **Sửa ghi chú**, lưu rồi bấm **Huỷ yêu cầu**. Phiếu được rút khỏi hàng chờ. Có thể bấm **Gửi lại TA**.
 5. Chọn tab **Hàng chờ TA**, bấm **Mở phiếu**. Phiếu chuyển sang đã tiếp nhận. Khi trở lại màn hình học viên, trạng thái này được cập nhật.
 
 Các lượt gợi ý giữ giới hạn hai bậc. Nội dung AI chỉ hướng dẫn cách tự kiểm.
+
+Nếu nhập “Bài này em ra trung vị 11,5 đúng không?”, trợ lý hỏi số bài trước và giữ giới hạn bài đang mở trong lúc chờ làm rõ. Chọn **Bài tập 3** sẽ mở luồng tự kiểm mà không xác nhận kết quả. Trạng thái bài lấy từ dữ liệu trang khoá học trong demo, kể cả khi người học nói bài đã đóng.
 
 ### Ca 2 · Tài liệu §3.3 có câu cần xem lại
 
@@ -21,6 +23,8 @@ Các lượt gợi ý giữ giới hạn hai bậc. Nội dung AI chỉ hướng
 3. Phiếu TA được tạo tự động trong trạng thái mô phỏng, kèm **Huỷ yêu cầu** và **Sửa ghi chú**. Nháp FAQ ẩn danh vào hàng chờ duyệt.
 4. Chuyển tab **Hàng chờ TA**, tương ứng 08:00 ngày 14/11. Xem câu hỏi, mã mục, cảnh báo và nháp FAQ.
 5. Chọn **Đăng** để xem bản xác nhận gửi tới cả lớp. Chọn **Huỷ** để giữ nháp. Chọn **Sửa rồi đăng**, chỉnh nội dung, bấm **Đăng** và **Xác nhận đăng** để hoàn tất. FAQ đã đăng có nút **Gỡ FAQ**. Nút **Bỏ** loại nháp trước khi đăng.
+
+Cách hỏi khác có nhắc “Bài 3” cùng mâu thuẫn toán học ở §3.3 vẫn vào luồng kiểm tra nguồn. Phiếu báo nguồn chỉ ghi §3.3 và lý do cần xem lại. Phiếu Bài tập 3 mới ghi trạng thái bài đang mở; phiếu xin gia hạn ghi rõ AI không có quyền gia hạn.
 
 ## Ảnh đánh số và đối chiếu HAX/PAIR
 

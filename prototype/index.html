@@ -816,7 +816,7 @@
           <strong id="ta-availability" class="small"
             ><span class="dot"></span>TA đã hết giờ trực</strong
           >
-          <p id="ta-hours">Giờ trực 08:00–22:00<br />Tiếp nhận từ 08:00 ngày 14/11</p>
+          <p id="ta-hours">Giờ trực 08:00–22:00<br />Bắt đầu trực lại lúc 08:00 ngày 14/11</p>
         </div>
         <div class="sidebar-note">
           <strong>Học tiếp, từng bước.</strong>Trợ lý trích mục tài liệu, gợi ý cách làm và chuyển
@@ -1066,7 +1066,7 @@
       function renderTicket(ticket) {
         const cancelled = ticket.status === "cancelled";
         const read = ticket.status === "read";
-        return `<div class="transfer ${cancelled ? "cancelled" : ""}" data-ticket="${ticket.id}"><div class="marked-title"><span class="marker">2</span><strong>${cancelled ? "Đã huỷ yêu cầu" : read ? "TA đã mở phiếu" : "Đã gửi TA · Mô phỏng"} · #${String(ticket.id).padStart(3, "0")}</strong></div><p>${escapeHtml(ticket.reason)}</p><p><strong>Câu hỏi gốc</strong><br>${escapeHtml(ticket.message)}</p><p>Căn cứ ${escapeHtml(ticket.refs)}</p>${ticket.note ? `<p>Ghi chú của bạn · ${escapeHtml(ticket.note)}</p>` : ""}<p>${cancelled ? "Phiếu đã được rút khỏi hàng chờ." : read ? "TA đang xem trong mô phỏng 08:00 ngày 14/11." : "TA trả lời từ 08:00 ngày 14/11, sau hạn nộp 23:59 ngày 13/11."}</p><div class="actions">${cancelled ? `<button data-action="resend" data-id="${ticket.id}">Gửi lại TA</button>` : read ? '<span class="small">Việc huỷ và sửa kết thúc khi TA mở phiếu.</span>' : `<button data-action="cancel-ticket" data-id="${ticket.id}">Huỷ yêu cầu</button><button data-action="edit-ticket" data-id="${ticket.id}">Sửa ghi chú</button>`}</div></div>`;
+        return `<div class="transfer ${cancelled ? "cancelled" : ""}" data-ticket="${ticket.id}"><div class="marked-title"><span class="marker">2</span><strong>${cancelled ? "Đã huỷ yêu cầu" : read ? "TA đã mở phiếu" : "Đã gửi vào hàng chờ TA · Mô phỏng"} · #${String(ticket.id).padStart(3, "0")}</strong></div><p>${escapeHtml(ticket.reason)}</p><p><strong>Câu hỏi gốc</strong><br>${escapeHtml(ticket.message)}</p><p>Căn cứ ${escapeHtml(ticket.refs)}</p>${ticket.note ? `<p>Ghi chú của bạn · ${escapeHtml(ticket.note)}</p>` : ""}<p>${cancelled ? "Phiếu đã được rút khỏi hàng chờ." : read ? "TA đang xem phiếu trong mô phỏng sáng 14/11." : "Phiếu đang trong hàng chờ. TA bắt đầu trực lúc 08:00 ngày 14/11; thời điểm phản hồi chưa được bảo đảm và có thể sau hạn 23:59 ngày 13/11."}</p><div class="actions">${cancelled ? `<button data-action="resend" data-id="${ticket.id}">Gửi lại TA</button>` : read ? '<span class="small">Việc huỷ và sửa kết thúc khi TA mở phiếu.</span>' : `<button data-action="cancel-ticket" data-id="${ticket.id}">Huỷ yêu cầu</button><button data-action="edit-ticket" data-id="${ticket.id}">Sửa ghi chú</button>`}</div></div>`;
       }
       function renderAnswer() {
         switch (state.kind) {
@@ -1076,13 +1076,13 @@
                 `Chế độ gợi ý bậc ${state.hint}/2 · Bài tập 3 đang mở`,
                 "Căn cứ trạng thái bài từ trang khoá học. Giới hạn hỗ trợ được áp dụng tới 23:59 ngày 13/11/2026.",
               ) +
-              "<p>Bài 3 đang mở tới <strong>23:59 hôm nay</strong> (theo trang khoá học), nên mình không xác nhận đáp số đúng hay sai và không tính hộ. Hiện đã qua giờ trực TA (08:00–22:00), nên nếu chuyển TA thì từ <strong>08:00 sáng mai</strong> mới có phản hồi (sau hạn nộp).</p>" +
+              "<p>Bài 3 đang mở tới <strong>23:59 hôm nay</strong> (theo trang khoá học), nên mình không xác nhận đáp số đúng hay sai và không tính hộ. TA bắt đầu trực lại lúc <strong>08:00 sáng mai</strong>; phiếu sẽ nằm trong hàng chờ và phản hồi có thể đến sau hạn nộp.</p>" +
               sourceButtons(["3.1", "3.2", "course"]) +
               '<div class="answer-block"><strong>Tự kiểm trung bình cộng · §3.1</strong>Cộng đủ 8 mức lương rồi chia cho 8.</div><div class="answer-block"><strong>Tự kiểm trung vị · §3.2</strong>Sắp xếp đủ 8 giá trị tăng dần. Với 8 giá trị, bạn đã lấy trung bình cộng của hai giá trị ở vị trí thứ 4 và thứ 5 chưa?</div>' +
               (state.hint === 2
                 ? '<div class="answer-block"><strong>Gợi ý bậc 2 · Kiểm tra phương pháp</strong>Đối chiếu quy tắc số chẵn trong §3.2. Bạn hãy tự đánh dấu hai vị trí giữa trên dãy đã sắp xếp rồi viết phép tính trên bảng tính.</div>'
                 : "") +
-              `<div class="actions">${state.hint === 1 ? '<button data-action="next-hint">Gợi ý bước tiếp</button>' : '<button data-action="stuck">Vẫn kẹt sau bậc 2</button>'}<button class="primary" data-action="ask-ta">Hỏi TA ↗</button></div><p class="hint">${state.hint === 2 ? "Đã tới giới hạn bậc 2. Bạn có thể tự kiểm hoặc chuyển TA." : "Gợi ý tối đa bậc 2. Bạn chọn bước tiếp để tiếp tục."} TA trả lời từ 08:00 sáng mai, sau hạn nộp.</p>`
+              `<div class="actions">${state.hint === 1 ? '<button data-action="next-hint">Gợi ý bước tiếp</button>' : '<button data-action="stuck">Vẫn kẹt sau bậc 2</button>'}<button class="primary" data-action="ask-ta">Hỏi TA ↗</button></div><p class="hint">${state.hint === 2 ? "Đã tới giới hạn bậc 2. Bạn có thể tự kiểm hoặc chuyển TA." : "Gợi ý tối đa bậc 2. Bạn chọn bước tiếp để tiếp tục."} TA bắt đầu trực lúc 08:00 sáng mai; phản hồi có thể sau hạn nộp.</p>`
             );
           case "source-error":
             return (
@@ -1091,7 +1091,9 @@
                 "Chưa kiểm chứng bởi giảng viên. Phản chứng toán học được trình bày bên dưới.",
                 true,
               ) +
-              "<p>Phép tính của bạn là <strong>đúng về mặt toán học</strong>, nên câu trong §3.3 cần được xem lại.</p>" +
+              (/0[,.]25/.test(state.message) && /0[,.]5/.test(state.message)
+                ? "<p>Phép tính của bạn là <strong>đúng về mặt toán học</strong>, nên câu trong §3.3 cần được xem lại.</p>"
+                : "<p>Câu trong §3.3 cần được xem lại. Ví dụ phản chứng bên dưới cho thấy vì sao.</p>") +
               sourceButtons(["3.3"]) +
               '<div class="answer-block suspect"><strong>Câu cần xem lại trong tài liệu</strong>“Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai”<div class="formula">√0,25 = 0,5 &gt; 0,25</div>Khi phương sai nằm giữa 0 và 1, căn bậc hai lớn hơn phương sai. Tại 0 và 1, hai giá trị bằng nhau. Quan hệ “nhỏ hơn” đúng khi phương sai &gt; 1.</div><div class="answer-block"><strong>Kiến thức chắc chắn để học tiếp</strong>Độ lệch chuẩn là căn bậc hai của phương sai và có cùng đơn vị với dữ liệu gốc.</div><p class="small">Bạn có thể báo thêm cho giảng viên để kiểm tra câu trong §3.3.</p>' +
               `<div class="confidence warn"><strong>${state.faq?.status === "published" ? "FAQ đã được TA duyệt và đăng trong demo" : state.faq?.status === "discarded" ? "TA đã bỏ nháp FAQ" : "Đã tạo nháp FAQ ẩn danh · Chờ TA duyệt"}</strong>Nháp nằm trong hàng chờ TA của phiên mô phỏng.</div>`
@@ -1146,7 +1148,7 @@
                 "Hạn lấy từ trang khoá học. TA trực 08:00–22:00.",
                 true,
               ) +
-              "<p>Hạn Bài tập 3 là <strong>23:59 ngày 13/11/2026</strong>. Mình có thể chuyển yêu cầu tới TA. TA trả lời từ <strong>08:00 ngày 14/11</strong>, sau hạn nộp. Bạn nên nộp phần đã làm trước 23:59.</p>" +
+              "<p>Hạn Bài tập 3 là <strong>23:59 ngày 13/11/2026</strong>. Mình không có quyền gia hạn. Phiếu đã vào hàng chờ TA trong mô phỏng; TA bắt đầu trực lúc <strong>08:00 ngày 14/11</strong>, còn thời điểm phản hồi chưa được bảo đảm và có thể sau hạn nộp. Bạn nên nộp phần đã làm trước 23:59.</p>" +
               sourceButtons(["course"])
             );
           case "closed":
@@ -1166,6 +1168,11 @@
                 true,
               ) +
               '<p>Buổi 7 sẽ học kiểm định giả thuyết và p-value.</p><div class="actions"><button data-action="ask-ta">Hỏi TA ↗</button></div>'
+            );
+          case "clarify-assignment":
+            return (
+              confidence("Chưa xác định được bài tập", "Trong lúc chờ làm rõ, mình giữ giới hạn của bài đang mở.", true) +
+              '<p>Bạn đang hỏi Bài tập số mấy? Mình chưa thể xác nhận kết quả đúng hay sai khi chưa biết trạng thái bài từ trang khoá học.</p><div class="actions"><button data-action="choose-assignment-3">Bài tập 3</button><button data-action="clarify">Bài khác · nêu số bài</button></div>'
             );
           case "clarify":
             return (
@@ -1202,14 +1209,18 @@
           state.tickets.filter((ticket) => ticket.status === "queued").length || "";
       }
       function classify(message) {
-        const text = message.toLocaleLowerCase("vi");
-        const exact = Object.keys(scenarios).find(
-          (key) => scenarios[key].toLocaleLowerCase("vi") === text,
-        );
-        if (exact) return exact;
-        if (/bài\s*(tập\s*)?3/.test(text)) return "assignment";
-        if (text.includes("§3.3") && text.includes("0,25")) return "source-error";
-        if (text.includes("slide 12")) return "missing";
+        const text = message.toLocaleLowerCase("vi").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+        const sourceTopic = /(?:§\s*3\.3|muc\s*3\.3|do lech chuan|phuong sai)/.test(text);
+        const sourceConflict = /(?:sai|loi|mau thuan|bat hop ly|khong dung|khong on|can xem lai|luon nho hon|0[,.]25|0[,.]5|can bac hai)/.test(text);
+        if (sourceTopic && sourceConflict) return "source-error";
+        if (/slide\s*\d+/.test(text)) return "missing";
+        if (/gia han|nop muon/.test(text)) return "deadline";
+        if (/buoi\s*7|p[- ]?value/.test(text)) return "unreleased";
+        if (/bai\s*(?:tap\s*)?2\b/.test(text)) return "closed";
+        if (/bai\s*(?:tap\s*)?3\b/.test(text)) return "assignment";
+        if (/bai\s*(?:nay|tap nay|em)|dap (?:so|an)|ket qua/.test(text) && /(?:dung|sai|chuan|kiem tra|doi chieu|ra\s+\d)/.test(text)) return "clarify-assignment";
+        if (/trung vi/.test(text) && /trung binh/.test(text)) return "normal";
+        if (/do lech/.test(text)) return "ambiguous";
         return "unknown";
       }
       function sendMessage(message) {
@@ -1228,7 +1239,7 @@
         $("#queue-count").textContent =
           state.tickets.filter((ticket) => ticket.status === "queued").length || "";
         $("#ta-content").innerHTML =
-          `<div class="ta-grid"><section class="panel ta-card"><div class="eyebrow">Chuyển người · chuyen_TA</div><h2 class="marked-title"><span class="marker">2</span>Phiếu hỗ trợ (${tickets.length})</h2><p class="small">Mở phiếu để tiếp nhận. Học viên được huỷ và sửa ghi chú tới khi TA mở.</p>${tickets.length ? tickets.map((ticket) => `<article class="ticket ${ticket.status === "read" ? "read" : ""}"><h3>#${String(ticket.id).padStart(3, "0")} · ${escapeHtml(ticket.reason)}</h3><p>${escapeHtml(ticket.message)}</p><p class="small" style="margin-top:8px">Căn cứ ${escapeHtml(ticket.refs)}<br>Bài tập 3 đang mở tại thời điểm hỏi<br>${ticket.kind === "assignment" ? `Đã gợi ý tới bậc ${ticket.hint || 1}/2` : ""}</p>${ticket.note ? `<p>Ghi chú · ${escapeHtml(ticket.note)}</p>` : ""}<div class="actions">${ticket.status === "read" ? '<span class="status">TA đã tiếp nhận · Mô phỏng</span>' : `<button data-action="open-ticket" data-id="${ticket.id}">Mở phiếu</button>`}</div></article>`).join("") : '<div class="empty">Chưa có yêu cầu trong hàng chờ. Gửi câu hỏi ở màn hình học viên để bắt đầu.</div>'}</section><section class="panel ta-card"><div class="eyebrow">Cần TA duyệt · dang_FAQ</div><h2 class="marked-title"><span class="marker">1</span>Duyệt FAQ trước khi đăng</h2>${renderFAQ()}</section></div>`;
+          `<div class="ta-grid"><section class="panel ta-card"><div class="eyebrow">Chuyển người · chuyen_TA</div><h2 class="marked-title"><span class="marker">2</span>Phiếu hỗ trợ (${tickets.length})</h2><p class="small">Mở phiếu để tiếp nhận. Học viên được huỷ và sửa ghi chú tới khi TA mở.</p>${tickets.length ? tickets.map((ticket) => `<article class="ticket ${ticket.status === "read" ? "read" : ""}"><h3>#${String(ticket.id).padStart(3, "0")} · ${escapeHtml(ticket.reason)}</h3><p>${escapeHtml(ticket.message)}</p><p class="small" style="margin-top:8px">Căn cứ ${escapeHtml(ticket.refs)}<br>${ticket.kind === "assignment" ? `Bài tập 3 đang mở tại thời điểm hỏi<br>Đã gợi ý tới bậc ${ticket.hint || 1}/2<br>Bậc 1: cộng 8 giá trị rồi chia 8; sắp xếp và lấy hai vị trí giữa theo §3.1–§3.2${ticket.hint === 2 ? "<br>Bậc 2: tự đánh dấu hai vị trí giữa và viết phép tính trên bảng tính" : ""}` : ticket.kind === "source-error" ? "Cần kiểm tra câu §3.3 vì phản chứng 0,25 → 0,5" : ticket.kind === "deadline" ? "AI không có quyền gia hạn; phiếu chờ TA xem" : "Cần TA làm rõ"}</p>${ticket.note ? `<p>Ghi chú · ${escapeHtml(ticket.note)}</p>` : ""}<div class="actions">${ticket.status === "read" ? '<span class="status">TA đã tiếp nhận · Mô phỏng</span>' : `<button data-action="open-ticket" data-id="${ticket.id}">Mở phiếu</button>`}</div></article>`).join("") : '<div class="empty">Chưa có yêu cầu trong hàng chờ. Gửi câu hỏi ở màn hình học viên để bắt đầu.</div>'}</section><section class="panel ta-card"><div class="eyebrow">Cần TA duyệt · dang_FAQ</div><h2 class="marked-title"><span class="marker">1</span>Duyệt FAQ trước khi đăng</h2>${renderFAQ()}</section></div>`;
       }
       function renderFAQ() {
         if (!state.faq)
@@ -1244,7 +1255,7 @@
         $("#ta-availability").textContent = isTA ? "TA đang trực · Mô phỏng" : "TA đã hết giờ trực";
         $("#ta-hours").innerHTML = isTA
           ? "Giờ trực 08:00–22:00<br>Đang mô phỏng sáng 14/11"
-          : "Giờ trực 08:00–22:00<br>Tiếp nhận từ 08:00 ngày 14/11";
+          : "Giờ trực 08:00–22:00<br>Bắt đầu trực lại lúc 08:00 ngày 14/11";
         $("#learner-screen").hidden = isTA;
         $("#ta-screen").hidden = !isTA;
         $("#ta-tab").setAttribute("aria-selected", String(isTA));
@@ -1296,6 +1307,10 @@
             break;
           case "next-hint":
             state.hint = 2;
+            renderLearner();
+            break;
+          case "choose-assignment-3":
+            state.kind = "assignment";
             renderLearner();
             break;
           case "stuck":
